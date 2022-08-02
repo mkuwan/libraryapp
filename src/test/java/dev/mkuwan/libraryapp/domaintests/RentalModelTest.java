@@ -12,6 +12,10 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
+/**
+ * AAA: Arrange, Act, Assertions
+ * behavior: Given, When, Then
+ */
 @SpringBootTest
 public class RentalModelTest {
     RentalModel rentalModel;
@@ -64,5 +68,24 @@ public class RentalModelTest {
                     });
                 })
                 .withMessage("貸出数の上限となっています");
+    }
+
+    @Test
+    void 同じ本を借りたら怒られる(){
+        // Arrange
+        var today = LocalDate.now();
+        var limitDay = today.plusDays(7);
+        RentalInfoObject rental = new RentalInfoObject(UUID.randomUUID().toString(), today, limitDay);
+
+        // Act
+        // 1冊目
+        rentalModel.setRental(rental);
+
+        // Assertion
+        Assertions.assertThatIllegalArgumentException()
+                .isThrownBy(() -> {
+                    rentalModel.setRental(rental);
+                })
+                .withMessage("貸出中の書籍に同じ書籍があるため貸出できません");
     }
 }
