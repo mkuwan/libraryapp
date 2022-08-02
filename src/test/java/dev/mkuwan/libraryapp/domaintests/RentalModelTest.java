@@ -88,4 +88,29 @@ public class RentalModelTest {
                 })
                 .withMessage("貸出中の書籍に同じ書籍があるため貸出できません");
     }
+
+    @Test
+    void 延滞した本があると借りられない(){
+        // Arrange: setupは使用しないです
+        Set<RentalInfoObject> rentals = new HashSet<>();
+        var today = LocalDate.now();
+        // 1日オーバーしてる
+        var limitDay = today.plusDays(-1);
+        for (int i = 0; i < 3; i++) {
+            rentals.add(new RentalInfoObject(UUID.randomUUID().toString(), today, limitDay));
+        }
+        RentalModel overRental = new RentalModel(UUID.randomUUID().toString(), "user001", rentals);
+
+        // Act
+        today = LocalDate.now();
+        limitDay = today.plusDays(7);
+        RentalInfoObject rental = new RentalInfoObject(UUID.randomUUID().toString(), today, limitDay);
+
+        // Assertion
+        Assertions.assertThatIllegalArgumentException()
+                .isThrownBy(() -> {
+                    overRental.setRental(rental);
+                })
+                .withMessage("貸出中の書籍に延滞があるため貸出できません");
+    }
 }
