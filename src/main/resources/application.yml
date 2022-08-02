@@ -1,0 +1,21 @@
+server:
+  port: 15001
+  error:
+    include-message: always
+    include-binding-errors: always
+spring:
+  devtools:
+    remote:
+      proxy:
+        host: localhost
+        port: 8080
+      restart:
+        enabled: true
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+  application:
+    name: libraryapp
+  data:
+    rest:
+      base-path: /api

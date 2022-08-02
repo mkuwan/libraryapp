@@ -1,0 +1,50 @@
+version: '3.9'
+services:
+  rabbitmq:
+    image: rabbitmq:latest
+    container_name: library-rabbitmq
+    restart: always
+    ports:
+      - "15072:15672"
+      - "15073:5672"
+
+  mariadb:
+    container_name: lib-mariadb
+    hostname: lib-mariadb
+    image: mariadb
+    environment:
+      # user: root
+      MYSQL_ROOT_PASSWORD: mariapassword
+      MYSQL_DATABASE: librarydb
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+    networks:
+      - mariadbnet
+    ports:
+      - "15306:3306"
+    volumes:
+      - mariadb:/var/lib/mysql
+    restart: unless-stopped
+
+  phpmyadmin:
+    image: phpmyadmin
+    container_name: lib-phpmyadmin
+    restart: unless-stopped
+    ports:
+      - "15080:80"
+    environment:
+      PMA_HOST: mariadb
+      PMA_VERBOSE: groupware
+      PMA_PORT: 3306
+    depends_on:
+      - mariadb
+    networks:
+      - mariadbnet
+
+networks:
+  mariadbnet:
+    driver: bridge
+
+volumes:
+  pgadmin:
+  mariadb:
