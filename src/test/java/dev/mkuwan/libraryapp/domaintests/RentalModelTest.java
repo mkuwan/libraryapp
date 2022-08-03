@@ -28,7 +28,7 @@ public class RentalModelTest {
         for (int i = 0; i < 3; i++) {
             rentals.add(new RentalInfoObject(UUID.randomUUID().toString(), today, limitDay));
         }
-        rentalModel = new RentalModel(UUID.randomUUID().toString(), "user001", rentals);
+        rentalModel = new RentalModel("user001", rentals);
     }
 
     @Test
@@ -99,7 +99,7 @@ public class RentalModelTest {
         for (int i = 0; i < 3; i++) {
             rentals.add(new RentalInfoObject(UUID.randomUUID().toString(), today, limitDay));
         }
-        RentalModel overRental = new RentalModel(UUID.randomUUID().toString(), "user001", rentals);
+        RentalModel overRental = new RentalModel("user001", rentals);
 
         // Act
         today = LocalDate.now();

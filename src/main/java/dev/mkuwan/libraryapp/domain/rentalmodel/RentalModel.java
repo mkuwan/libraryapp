@@ -8,12 +8,10 @@ import java.util.Set;
 
 @Getter
 public class RentalModel {
-    private String RentalId;
     private String UserId;
     private Set<RentalInfoObject> Rentals;
 
-    public RentalModel(String rentalId, String userId, Set<RentalInfoObject> rentals) {
-        RentalId = rentalId;
+    public RentalModel(String userId, Set<RentalInfoObject> rentals) {
         UserId = userId;
         Rentals = rentals;
     }

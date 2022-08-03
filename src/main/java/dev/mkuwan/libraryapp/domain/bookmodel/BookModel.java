@@ -10,7 +10,18 @@ public class BookModel {
     private String Title1;
     private String Title2;
     private String Title3;
-    private String AuthorId;
     private String BookInfo;
     private Integer Amount;
+
+    public BookModel(String bookId,
+                     String title1, String title2, String title3,
+                     String bookInfo,
+                     Integer amount) {
+        BookId = bookId;
+        Title1 = title1;
+        Title2 = title2;
+        Title3 = title3;
+        BookInfo = bookInfo;
+        Amount = amount;
+    }
 }
