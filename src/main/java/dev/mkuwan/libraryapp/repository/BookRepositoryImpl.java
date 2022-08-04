@@ -5,6 +5,10 @@ import dev.mkuwan.libraryapp.domain.repository.IBookRepository;
 import dev.mkuwan.libraryapp.repository.entity.BookEntityDTO;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+
 @Component
 public class BookRepositoryImpl implements IBookRepository {
 
@@ -12,6 +16,22 @@ public class BookRepositoryImpl implements IBookRepository {
 
     public BookRepositoryImpl(BookRepositoryJpa bookRepositoryJpa){
         this.bookRepositoryJpa = bookRepositoryJpa;
+    }
+
+    @Override
+    public ArrayList<BookModel> getBooks() {
+        var books = bookRepositoryJpa.findAll();
+        var bookModels = new ArrayList<BookModel>();
+        books.forEach(x -> {
+            bookModels.add(new BookModel(x.getBookId(),
+                    x.getBookName1(),
+                    x.getBookName2(),
+                    x.getBookName3(),
+                    x.getBookInfo(),
+                    x.getAmount()));
+        });
+
+        return bookModels;
     }
 
     @Override
