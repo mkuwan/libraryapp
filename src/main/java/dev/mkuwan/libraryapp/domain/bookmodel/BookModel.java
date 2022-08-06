@@ -3,6 +3,7 @@ package dev.mkuwan.libraryapp.domain.bookmodel;
 import lombok.Getter;
 
 import java.util.Currency;
+import java.util.Objects;
 
 @Getter
 public class BookModel {
@@ -24,4 +25,9 @@ public class BookModel {
         BookInfo = bookInfo;
         Amount = amount;
     }
+
+    public BookModel(String bookId) {
+        BookId = bookId;
+    }
+
 }

@@ -18,3 +18,4 @@ public class RentalEntity {
     private LocalDate StartDate;
     private LocalDate EndData;
 }
+

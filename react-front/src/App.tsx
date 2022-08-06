@@ -8,7 +8,7 @@ function App() {
     const demoMailInfo: MailInfoProps[] = [
         {
             num: 1,
-            content: 'メールその1'
+            content: 'メールその1だよ'
         },
         {
             num: 2,
