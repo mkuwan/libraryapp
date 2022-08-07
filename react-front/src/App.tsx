@@ -1,7 +1,13 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import logo from './logo.svg';
 import './App.css';
 import TopBar, {MailInfoProps} from "./components/TopBar";
+import SideBar from "./components/SideBar";
+import {SettingsContext, SettingsContextValue} from "./context/SettingsContext";
+import {SidebarContext} from "./context/SidebarContext";
+import {useMediaQuery} from "@mui/material";
+import {ThemeProvider, createTheme, Theme} from '@mui/material/styles'
+import CssBaseline from '@mui/material/CssBaseline'
 
 function App() {
 
@@ -16,10 +22,17 @@ function App() {
         }
     ]
 
+    const theme = createTheme();
+    // const size = useMediaQuery(() => theme.breakpoints.down('lg'));
+    console.log(`サイズ は middle? ${useMediaQuery(theme.breakpoints.down('md'))}`)
 
   return (
     <div className="App">
-      <TopBar mailProps={demoMailInfo}/>
+        <ThemeProvider theme={theme}>
+            <CssBaseline/>
+            <SideBar/>
+            <TopBar mailProps={demoMailInfo}/>
+        </ThemeProvider>
     </div>
   );
 }

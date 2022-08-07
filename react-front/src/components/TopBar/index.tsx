@@ -240,10 +240,12 @@ export const TopBar = (props: TopBarProps ) => {
                                          inputProps={{'aria-label': 'search'}}/>
                     </Search>
                     <Box sx={{ flexGrow: 1 }}/>
+
                     {/*md以上で表示*/}
                     <Box sx={{ display: { xs: 'none', md: 'flex'}}}>
                         {standardIconMenu}
                     </Box>
+
                     {/*xs以下で表示*/}
                     <Box sx={{ display: { xs: 'flex', md: 'none'}}}>
                         <IconButton size={'large'}
@@ -255,6 +257,7 @@ export const TopBar = (props: TopBarProps ) => {
                             <MoreIcon/>
                         </IconButton>
                     </Box>
+
                 </Toolbar>
             </AppBar>
             {renderMobileMenu}
