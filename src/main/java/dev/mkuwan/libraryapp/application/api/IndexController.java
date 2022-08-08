@@ -1,4 +1,4 @@
-package dev.mkuwan.libraryapp.api;
+package dev.mkuwan.libraryapp.application.api;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

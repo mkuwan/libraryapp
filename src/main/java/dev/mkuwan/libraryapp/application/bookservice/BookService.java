@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Set;
 
 @Service
-public class BookService implements IBookService{
+public class BookService {
 
     private final IBookRepository bookRepository;
 
@@ -20,7 +20,6 @@ public class BookService implements IBookService{
         this.bookRepository = bookRepository;
     }
 
-    @Override
     public ArrayList<BookViewModel> getBooks() {
 
         var books = bookRepository.getBooks();

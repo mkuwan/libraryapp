@@ -4,15 +4,31 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import {BrowserRouter} from "react-router-dom";
+import { SettingsProvider} from "./context/SettingsContext";
+import {SidebarProvider} from "./context/SidebarContext";
+import {createTheme, ThemeProvider} from "@mui/material/styles";
+import CssBaseline from "@mui/material/CssBaseline";
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
+const theme = createTheme();
+
 root.render(
   <React.StrictMode>
-      <BrowserRouter>
-          <App />
-      </BrowserRouter>
+      <ThemeProvider theme={theme}>
+          <SettingsProvider>
+              <SidebarProvider>
+                  <BrowserRouter>
+                      {/*<Helmet>*/}
+                      {/*    <title>MK Business Software</title>*/}
+                      {/*</Helmet>*/}
+                      <CssBaseline/>
+                      <App />
+                  </BrowserRouter>
+              </SidebarProvider>
+          </SettingsProvider>
+      </ThemeProvider>
   </React.StrictMode>
 );
 

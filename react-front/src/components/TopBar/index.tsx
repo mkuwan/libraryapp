@@ -17,18 +17,26 @@ import SearchIcon from '@mui/icons-material/Search';
 import MailIcon from '@mui/icons-material/Mail'
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+
 import MoreIcon from '@mui/icons-material/MoreVert';
-import React, {ReactElement, useState} from "react";
+import React, {ReactElement, useContext, useState} from "react";
+import {SidebarContext} from "../../context/SidebarContext";
 
 const theme = createTheme();
 
 theme.typography.h3 = {
-    fontSize: '0.9rem',
-    '@media (min-width:600px)': {
-        fontSize: '1.2rem',
+    fontSize: '1.0rem',
+    [theme.breakpoints.down('sm')]:{
+        fontSize: '0.7rem',
+    },
+    [theme.breakpoints.up('sm')]: {
+        fontSize: '0.8rem',
     },
     [theme.breakpoints.up('md')]: {
-        fontSize: '1.5rem',
+        fontSize: '0.8rem',
+    },
+    [theme.breakpoints.up('lg')]: {
+        fontSize: '1.0rem',
     },
 };
 
@@ -65,7 +73,7 @@ const StyledInputBase = styled(InputBase)(({theme}) => ({
         transition: theme.transitions.create('width'),
         width: '100%',
         [theme.breakpoints.up('md')]: {
-            width: '40ch',
+            width: '30ch',
         },
     },
 }));
@@ -87,8 +95,11 @@ type TopBarProps = {
 
 
 export const TopBar = (props: TopBarProps ) => {
+    const { toggleOpenClose } = useContext(SidebarContext);
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState<null | HTMLElement>(null);
+
+    const { isHidden } = useContext(SidebarContext);
 
     const isMenuOpen = Boolean(anchorEl);
     const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
@@ -216,17 +227,21 @@ export const TopBar = (props: TopBarProps ) => {
     )
 
     return(
-        <Box sx={{ flexGrow: 1}}>
-            <AppBar position={'static'} className={'bg-custom-dark'}>
+        <Box sx={{ flexGrow: 1 }}>
+            <AppBar position={'static'} className={'bg-custom-dark'} >
                 {/*<Toolbar sx={{ display: {xs: 'none', sm: 'flex'} }}>*/}
                 <Toolbar>
-                    <IconButton size={'large'}
-                                edge={'start'}
-                                color={'inherit'}
-                                aria-label={'open drawer'}
-                                sx={{ mr: 2 }}>
-                        <MenuIcon/>
-                    </IconButton>
+                    {isHidden && (
+                        <IconButton size={'large'}
+                                    edge={'start'}
+                                    color={'inherit'}
+                                    aria-label={'open drawer'}
+                                    sx={{ mr: 2 }}
+                                    onClick={toggleOpenClose}>
+                            <MenuIcon/>
+                        </IconButton>
+                    )}
+
                     <ThemeProvider theme={theme}>
                         <Typography variant={'h3'}>
                             不思議な図書館
@@ -240,10 +255,12 @@ export const TopBar = (props: TopBarProps ) => {
                                          inputProps={{'aria-label': 'search'}}/>
                     </Search>
                     <Box sx={{ flexGrow: 1 }}/>
+
                     {/*md以上で表示*/}
                     <Box sx={{ display: { xs: 'none', md: 'flex'}}}>
                         {standardIconMenu}
                     </Box>
+
                     {/*xs以下で表示*/}
                     <Box sx={{ display: { xs: 'flex', md: 'none'}}}>
                         <IconButton size={'large'}
@@ -255,6 +272,7 @@ export const TopBar = (props: TopBarProps ) => {
                             <MoreIcon/>
                         </IconButton>
                     </Box>
+
                 </Toolbar>
             </AppBar>
             {renderMobileMenu}
