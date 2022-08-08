@@ -8,6 +8,7 @@ import {SidebarContext} from "./context/SidebarContext";
 import {useMediaQuery} from "@mui/material";
 import {ThemeProvider, createTheme, Theme} from '@mui/material/styles'
 import CssBaseline from '@mui/material/CssBaseline'
+import Layout from "./components/Layout";
 
 function App() {
 
@@ -24,14 +25,15 @@ function App() {
 
     const theme = createTheme();
     // const size = useMediaQuery(() => theme.breakpoints.down('lg'));
-    console.log(`サイズ は middle? ${useMediaQuery(theme.breakpoints.down('md'))}`)
+    // console.log(`サイズ は middle? ${useMediaQuery(theme.breakpoints.down('md'))}`)
 
   return (
     <div className="App">
         <ThemeProvider theme={theme}>
             <CssBaseline/>
-            <SideBar/>
-            <TopBar mailProps={demoMailInfo}/>
+            <Layout/>
+            {/*<SideBar/>*/}
+            {/*<TopBar mailProps={demoMailInfo}/>*/}
         </ThemeProvider>
     </div>
   );

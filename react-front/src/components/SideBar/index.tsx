@@ -1,43 +1,88 @@
-// ** React Import
-import { ReactNode, useRef, useState } from 'react'
+// ** React Imports
+import {ReactNode, useContext} from 'react'
 
-// ** MUI Import
-import Box, { BoxProps } from '@mui/material/Box'
+// ** MUI Imports
 import {styled, Theme, useTheme} from '@mui/material/styles'
+import MuiSwipeableDrawer, { SwipeableDrawerProps } from '@mui/material/SwipeableDrawer'
+import {SidebarContext} from "../../context/SidebarContext";
+import {Button, IconButton, SwipeableDrawer, useMediaQuery} from "@mui/material";
+import MenuIcon from '@mui/icons-material/Menu'
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
-// ** Component Imports
-import Drawer from './Drawer'
-import {useMediaQuery} from "@mui/material";
+const StyledSwipeableDrawer = styled(SwipeableDrawer)<SwipeableDrawerProps>({
+    overflowX: 'hidden',
+    transition: 'width .25s ease-in-out',
+    '& ul': {
+        listStyle: 'none'
+    },
+    '& .MuiListItem-gutters': {
+        paddingLeft: 4,
+        paddingRight: 4
+    },
+    '& .MuiDrawer-paper': {
+        left: 'unset',
+        right: 'unset',
+        overflowX: 'hidden',
+        transition: 'width .25s ease-in-out, box-shadow .25s ease-in-out'
+    },
 
-
-const StyledBoxForShadow = styled(Box)<BoxProps>({
-    top: 50,
-    left: -8,
-    zIndex: 2,
-    height: 75,
-    display: 'none',
-    position: 'absolute',
-    pointerEvents: 'none',
-    width: 'calc(100% + 15px)',
-    '&.d-block': {
-        display: 'block'
-    }
 })
 
-const SideBar = () => {
-    const [hidden, setHidden] = useState(true);
+export const SideBar = () => {
+    const { sidebarWidth, isOpen, isHidden, onOpen, onClose } = useContext(SidebarContext);
 
-    // setHidden(useMediaQuery((theme: Theme) => theme.breakpoints.down('lg')));
+    // const hidden: boolean = false;
+    const theme = useTheme()
+
+    // Drawer Props for Mobile & Tablet screens
+    const MobileDrawerProps = {
+        open: isOpen,
+        onOpen: () => onOpen,
+        onClose: () => onClose,
+        ModalProps: {
+            keepMounted: true, // Better open performance on mobile.
+            background: 'blue'
+        }
+    }
+
+    // Drawer Props for Desktop screens
+    const DesktopDrawerProps = {
+        open: true,
+        onOpen: () => null,
+        onClose: () => null
+    }
 
 
     return (
-        <Drawer hidden={hidden}>
-            Header
+        <>
+            <StyledSwipeableDrawer
+                // className={'bg-custom-dark'}
+                anchor={'left'}
+                variant={isHidden ? 'temporary' : 'persistent'}
+                {...(isHidden ? { ...MobileDrawerProps } : { ...DesktopDrawerProps })}
+                PaperProps={
+                    { sx:
+                        {
+                            width: sidebarWidth,
+                            // backgroundColor: 'beige',
+                            background: 'linear-gradient(180deg, #282c34 0%, darkblue 5%)',
+                        }
+                    }
+                }
+                sx={{
+                    width: sidebarWidth,
+                    '& .MuiDrawer-paper': {
+                        borderRight: 0,
+                    }
+                }}
+            >
+                メニュー
+                <IconButton onClick={onClose}>
+                    <MenuIcon />
+                </IconButton>
+            </StyledSwipeableDrawer>
+        </>
 
-            <Box sx={{ height: '100%', position: 'relative', overflow: 'hidden' }}>
-                Box
-            </Box>
-        </Drawer>
     )
 }
 

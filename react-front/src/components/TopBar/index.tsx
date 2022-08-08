@@ -18,17 +18,24 @@ import MailIcon from '@mui/icons-material/Mail'
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import MoreIcon from '@mui/icons-material/MoreVert';
-import React, {ReactElement, useState} from "react";
+import React, {ReactElement, useContext, useState} from "react";
+import {SidebarContext} from "../../context/SidebarContext";
 
 const theme = createTheme();
 
 theme.typography.h3 = {
-    fontSize: '0.9rem',
-    '@media (min-width:600px)': {
-        fontSize: '1.2rem',
+    fontSize: '1.0rem',
+    [theme.breakpoints.down('sm')]:{
+        fontSize: '0.7rem',
+    },
+    [theme.breakpoints.up('sm')]: {
+        fontSize: '0.8rem',
     },
     [theme.breakpoints.up('md')]: {
-        fontSize: '1.5rem',
+        fontSize: '0.8rem',
+    },
+    [theme.breakpoints.up('lg')]: {
+        fontSize: '1.0rem',
     },
 };
 
@@ -65,7 +72,7 @@ const StyledInputBase = styled(InputBase)(({theme}) => ({
         transition: theme.transitions.create('width'),
         width: '100%',
         [theme.breakpoints.up('md')]: {
-            width: '40ch',
+            width: '30ch',
         },
     },
 }));
@@ -87,6 +94,7 @@ type TopBarProps = {
 
 
 export const TopBar = (props: TopBarProps ) => {
+    const { toggleOpenClose } = useContext(SidebarContext);
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState<null | HTMLElement>(null);
 
@@ -216,15 +224,16 @@ export const TopBar = (props: TopBarProps ) => {
     )
 
     return(
-        <Box sx={{ flexGrow: 1}}>
-            <AppBar position={'static'} className={'bg-custom-dark'}>
+        <Box sx={{ flexGrow: 1 }}>
+            <AppBar position={'static'} className={'bg-custom-dark'} >
                 {/*<Toolbar sx={{ display: {xs: 'none', sm: 'flex'} }}>*/}
                 <Toolbar>
                     <IconButton size={'large'}
                                 edge={'start'}
                                 color={'inherit'}
                                 aria-label={'open drawer'}
-                                sx={{ mr: 2 }}>
+                                sx={{ mr: 2 }}
+                                onClick={toggleOpenClose}>
                         <MenuIcon/>
                     </IconButton>
                     <ThemeProvider theme={theme}>
