@@ -17,6 +17,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import MailIcon from '@mui/icons-material/Mail'
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+
 import MoreIcon from '@mui/icons-material/MoreVert';
 import React, {ReactElement, useContext, useState} from "react";
 import {SidebarContext} from "../../context/SidebarContext";
@@ -97,6 +98,8 @@ export const TopBar = (props: TopBarProps ) => {
     const { toggleOpenClose } = useContext(SidebarContext);
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState<null | HTMLElement>(null);
+
+    const { isHidden } = useContext(SidebarContext);
 
     const isMenuOpen = Boolean(anchorEl);
     const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
@@ -228,14 +231,17 @@ export const TopBar = (props: TopBarProps ) => {
             <AppBar position={'static'} className={'bg-custom-dark'} >
                 {/*<Toolbar sx={{ display: {xs: 'none', sm: 'flex'} }}>*/}
                 <Toolbar>
-                    <IconButton size={'large'}
-                                edge={'start'}
-                                color={'inherit'}
-                                aria-label={'open drawer'}
-                                sx={{ mr: 2 }}
-                                onClick={toggleOpenClose}>
-                        <MenuIcon/>
-                    </IconButton>
+                    {isHidden && (
+                        <IconButton size={'large'}
+                                    edge={'start'}
+                                    color={'inherit'}
+                                    aria-label={'open drawer'}
+                                    sx={{ mr: 2 }}
+                                    onClick={toggleOpenClose}>
+                            <MenuIcon/>
+                        </IconButton>
+                    )}
+
                     <ThemeProvider theme={theme}>
                         <Typography variant={'h3'}>
                             不思議な図書館
