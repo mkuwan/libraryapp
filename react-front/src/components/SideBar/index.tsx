@@ -1,14 +1,27 @@
-// ** React Imports
 import React, {ReactNode, useContext, useState} from 'react'
 
-// ** MUI Imports
 import {styled, Theme, useTheme} from '@mui/material/styles'
 import MuiSwipeableDrawer, { SwipeableDrawerProps } from '@mui/material/SwipeableDrawer'
 import {SidebarContext} from "../../context/SidebarContext";
-import {Box, Button, Divider, Fab, IconButton, SwipeableDrawer, useMediaQuery, Zoom} from "@mui/material";
+import {
+    Box,
+    Button,
+    Divider,
+    Fab,
+    IconButton, List, ListItemButton, ListItemIcon,ListItemText, Tooltip,
+    Stack,
+    SwipeableDrawer,
+    Typography,
+    useMediaQuery,
+    Zoom
+} from "@mui/material";
 import MenuIcon from '@mui/icons-material/Menu'
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
+import Menu from "./Menu";
+import {NavLink, Route, Routes, useNavigate} from "react-router-dom";
+import {menuItem} from "./MenuItem";
+import Link from '@mui/material/Link';
 
 const StyledSwipeableDrawer = styled(SwipeableDrawer)<SwipeableDrawerProps>({
     overflowX: 'hidden',
@@ -31,38 +44,8 @@ const StyledSwipeableDrawer = styled(SwipeableDrawer)<SwipeableDrawerProps>({
 
 export const SideBar = () => {
     const { sidebarWidth, isOpen, isHidden, onOpen, onClose } = useContext(SidebarContext);
-
-    // Drawer Props for Mobile & Tablet screens
-    // const MobileDrawerProps = {
-    //     open: isOpen,
-    //     onOpen: () => onOpen,
-    //     onClose: () => onClose,
-    //     ModalProps: {
-    //         keepMounted: true, // Better open performance on mobile.
-    //     }
-    // }
-    //
-    // Drawer Props for Desktop screens
-    // const DesktopDrawerProps = {
-    //     open: true,
-    //     onOpen: () => null,
-    //     onClose: () => null
-    // }
-    //
-    // const toggleDrawer = () =>
-    //         (event: React.KeyboardEvent | React.MouseEvent) => {
-    //             if (
-    //                 event &&
-    //                 event.type === 'keydown' &&
-    //                 ((event as React.KeyboardEvent).key === 'Tab' ||
-    //                     (event as React.KeyboardEvent).key === 'Shift')
-    //             ) {
-    //                 onClose();
-    //             }
-    //         };
-    // <StyledSwipeableDrawer の中で以下を使用してもいいのですが、なぜか画面クリックしても閉じない...why?
-    // {...(isHidden ? { ...MobileDrawerProps } : { ...DesktopDrawerProps })}
-
+    const theme = useTheme();
+    const navigate = useNavigate();
 
     return (
         <>
@@ -87,17 +70,7 @@ export const SideBar = () => {
                     }
                 }}>
 
-                {/*{isHidden && (*/}
-                {/*    <Box display="flex"*/}
-                {/*         justifyContent="flex-end"*/}
-                {/*         alignItems="flex-end">*/}
-                {/*        <Fab onClick={onClose}*/}
-                {/*             color={'primary'}*/}
-                {/*             size={'small'}>*/}
-                {/*            <ChevronLeftIcon fontSize={'large'} />*/}
-                {/*        </Fab>*/}
-                {/*    </Box>*/}
-                {/*)}*/}
+
                 <Box height={'4rem'}
                      display="flex"
                      justifyContent="center"
@@ -105,7 +78,24 @@ export const SideBar = () => {
                     メニュー
                 </Box>
                 <Divider color={'white'}/>
-                ssss
+                <Menu>
+                    {menuItem.map((item, index) => (
+                        <Box display={'flex'}
+                             paddingRight={theme.spacing(0.5)}
+                             m={1}
+                             minHeight={theme.mixins.toolbar.minHeight}>
+                            <NavLink to={item.path}
+                                     key={index}
+                                     onClick={onClose}
+                                     style={{textDecoration: 'none'}}>
+                                <Stack direction={'row'}>
+                                    <Typography color={item.iconColor}>{item.icon}</Typography>
+                                    <Typography color={item.fontColor}>{item.label}</Typography>
+                                </Stack>
+                            </NavLink>
+                        </Box>
+                    ))}
+                </Menu>
             </StyledSwipeableDrawer>
         </>
 

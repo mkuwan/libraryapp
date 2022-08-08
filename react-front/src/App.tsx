@@ -1,14 +1,13 @@
 import React, {useContext} from 'react';
-import logo from './logo.svg';
 import './App.css';
 import TopBar, {MailInfoProps} from "./components/TopBar";
 import SideBar from "./components/SideBar";
-import {SettingsContext, SettingsContextValue} from "./context/SettingsContext";
 import {SidebarContext} from "./context/SidebarContext";
-import {useMediaQuery} from "@mui/material";
+import {Box, Stack, useMediaQuery} from "@mui/material";
 import {ThemeProvider, createTheme, Theme} from '@mui/material/styles'
 import CssBaseline from '@mui/material/CssBaseline'
-import Layout from "./components/Layout";
+import {Route, Routes} from "react-router-dom";
+import {menuItem} from "./components/SideBar/MenuItem";
 
 function App() {
 
@@ -22,20 +21,29 @@ function App() {
             content: 'メールその2'
         }
     ]
-
-    const theme = createTheme();
-    // const size = useMediaQuery(() => theme.breakpoints.down('lg'));
-    // console.log(`サイズ は middle? ${useMediaQuery(theme.breakpoints.down('md'))}`)
+    const { isHidden } = useContext(SidebarContext);
 
   return (
-    <div className="App">
-        <ThemeProvider theme={theme}>
-            <CssBaseline/>
-            <Layout/>
-            {/*<SideBar/>*/}
-            {/*<TopBar mailProps={demoMailInfo}/>*/}
-        </ThemeProvider>
-    </div>
+      <>
+          <Stack direction={'row'}>
+              <SideBar/>
+              <Box sx={{ flexGrow: 1 }}>
+                  <TopBar mailProps={demoMailInfo}/>
+                  <div>
+                      <div>デスクトップ表示</div>
+                      <Routes>
+                          {menuItem.map((item, index) => (
+                              <Route path={item.path}
+                                     element={item.content}
+                                     key={index}
+                              />
+                          ))}
+                      </Routes>
+                  </div>
+              </Box>
+
+          </Stack>
+      </>
   );
 }
 
