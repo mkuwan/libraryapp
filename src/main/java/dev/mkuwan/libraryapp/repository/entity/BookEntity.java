@@ -12,25 +12,73 @@ import javax.persistence.Id;
 public class BookEntity {
     @Id
     private String bookId;
-    private String bookName1;
-    private String bookName2;
-    private String bookName3;
-    private String bookInfo;
-    private Integer amount;
-    private Integer rentedCount;
+    /**
+     * 全国書誌番号
+     */
+    private String BookNumber;
+
+    /**
+     * ISBN
+     */
+    private String ISBN;
+
+    /**
+     * ISSN
+     */
+    private String ISSN;
+
+    /**
+     * タイトル・著者
+     */
+    private String TitleAndAuthor;
+
+    /**
+     * 版
+     */
+    private String Version;
+
+    /**
+     * シリーズ
+     */
+    private String Series;
+
+    /**
+     * 出版事項
+     */
+    private String PublishInfo;
+
+    /**
+     * 大きさ等
+     */
+    private String SizeInfo;
+
+    /**
+     * 保有数
+     */
+    private Integer Amount;
+
+    /**
+     * 貸出中の数
+     */
+    private Integer RentedCount;
 
     public BookEntity(String bookId,
-                      String bookName1, String bookName2, String bookName3,
-                      String bookInfo,
-                      Integer amount,
-                      Integer rentedCount) {
+                      String bookNumber,
+                      String ISBN, String ISSN,
+                      String titleAndAuthor, String version, String series,
+                      String publishInfo, String sizeInfo,
+                      Integer amount, Integer rentedCount) {
         this.bookId = bookId;
-        this.bookName1 = bookName1;
-        this.bookName2 = bookName2;
-        this.bookName3 = bookName3;
-        this.bookInfo = bookInfo;
-        this.amount = amount;
-        this.rentedCount = rentedCount;
+        BookNumber = bookNumber;
+        this.ISBN = ISBN;
+        this.ISSN = ISSN;
+        TitleAndAuthor = titleAndAuthor;
+        Version = version;
+        Series = series;
+        PublishInfo = publishInfo;
+        SizeInfo = sizeInfo;
+        Amount = amount;
+        RentedCount = rentedCount;
     }
 
     public BookEntity() {

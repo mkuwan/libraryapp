@@ -24,11 +24,16 @@ public class BookRepositoryImpl implements IBookRepository {
         var bookModels = new ArrayList<BookModel>();
         books.forEach(x -> {
             bookModels.add(new BookModel(x.getBookId(),
-                    x.getBookName1(),
-                    x.getBookName2(),
-                    x.getBookName3(),
-                    x.getBookInfo(),
-                    x.getAmount()));
+                    x.getBookNumber(),
+                    x.getISBN(),
+                    x.getISSN(),
+                    x.getTitleAndAuthor(),
+                    x.getVersion(),
+                    x.getSeries(),
+                    x.getPublishInfo(),
+                    x.getSizeInfo(),
+                    x.getAmount(),
+                    x.getRentedCount()));
         });
 
         return bookModels;
