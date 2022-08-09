@@ -30,7 +30,7 @@ public class BookService {
             viewModels.add(view.fromModel(x));
         });
 
-        viewModels.sort(Comparator.comparing(BookViewModel::getBookName1));
+        viewModels.sort(Comparator.comparing(BookViewModel::getTitleAndAuthor));
 
         return viewModels;
     }
