@@ -81,6 +81,7 @@ public class BookEntity {
         RentedCount = rentedCount;
     }
 
+
     public BookEntity() {
 
     }
