@@ -32,10 +32,10 @@ public class BookViewModel {
 
     public BookViewModel fromModel(BookModel model){
         bookId = model.getBookId();
-        bookName1 = model.getTitle1();
-        bookName2 = model.getTitle2();
-        bookName3 = model.getTitle3();
-        bookInfo = model.getBookInfo();
+        bookName1 = model.getTitleAndAuthor();
+        bookName2 = model.getVersion();
+        bookName3 = model.getSeries();
+        bookInfo = model.getPublishInfo();
         amount = model.getAmount();
 
         return this;

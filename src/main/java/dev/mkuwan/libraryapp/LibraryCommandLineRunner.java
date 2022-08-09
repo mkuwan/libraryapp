@@ -35,11 +35,16 @@ public class LibraryCommandLineRunner implements CommandLineRunner {
 
         for (int i = 0; i < 10; i++) {
             var book = new BookModel(UUID.randomUUID().toString(),
-                    "本のタイトル" + (i + 1),
-                    "副題" + (i + 1),
-                    "第" + (i + 1) + "巻",
-                    "本の情報",
-                    i + 1);
+                    ((Integer)(1000 + i)).toString(),
+                    "978-4-00-061477-" + i,
+                    ((Integer)(2000 + i)).toString(),
+                    "本と著者" + (i + 1),
+                    (i + 1) + "版",
+                    "シリーズ" + (i + 1),
+                    "出版",
+                    "大きさ",
+                    i + 1,
+                    i);
 
             bookRepository.save(book);
         }
