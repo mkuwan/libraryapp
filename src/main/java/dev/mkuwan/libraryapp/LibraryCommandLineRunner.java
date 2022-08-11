@@ -2,7 +2,6 @@ package dev.mkuwan.libraryapp;
 
 import dev.mkuwan.libraryapp.domain.bookmodel.BookModel;
 import dev.mkuwan.libraryapp.domain.repository.IBookRepository;
-import dev.mkuwan.libraryapp.domain.repository.IRentalRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
@@ -46,7 +45,7 @@ public class LibraryCommandLineRunner implements CommandLineRunner {
                     i + 1,
                     i);
 
-            bookRepository.save(book);
+            bookRepository.registerBook(book);
         }
     }
 

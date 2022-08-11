@@ -1,32 +1,34 @@
 package dev.mkuwan.libraryapp.repository.entity;
 
 import dev.mkuwan.libraryapp.domain.bookmodel.BookModel;
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
 
 public class BookEntityDTO {
 
-    public static BookEntity fromModel(BookModel model){
-        var entity = BookEntity.builder()
+    public static BookEntity fromModel(@NotNull BookModel model){
+        return BookEntity.builder()
                 .bookId(model.getBookId())
-                .BookNumber(model.getBookNumber())
-                .ISBN(model.getISBN())
-                .ISSN(model.getISSN())
-                .TitleAndAuthor(model.getTitleAndAuthor())
-                .Version(model.getVersion())
-                .Series(model.getSeries())
-                .PublishInfo(model.getPublishInfo())
-                .SizeInfo(model.getSizeInfo())
-                .Amount(model.getAmount())
-                .RentedCount(model.getRentedCount())
+                .bookNumber(model.getBookNumber())
+                .isbn(model.getISBN())
+                .issn(model.getISSN())
+                .titleAuthor(model.getTitleAndAuthor())
+                .version(model.getVersion())
+                .series(model.getSeries())
+                .publishInfo(model.getPublishInfo())
+                .series(model.getSizeInfo())
+                .amount(model.getAmount())
+                .rentedCount(model.getRentedCount())
                 .build();
-        return entity;
     }
 
-    public static BookModel fromEntity(BookEntity entity){
+    @Contract("_ -> new")
+    public static @NotNull BookModel fromEntity(@NotNull BookEntity entity){
         return new BookModel(entity.getBookId(),
                 entity.getBookNumber(),
-                entity.getISBN(),
-                entity.getISSN(),
-                entity.getTitleAndAuthor(),
+                entity.getIsbn(),
+                entity.getIssn(),
+                entity.getTitleAuthor(),
                 entity.getVersion(),
                 entity.getSeries(),
                 entity.getPublishInfo(),

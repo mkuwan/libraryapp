@@ -1,66 +1,69 @@
 package dev.mkuwan.libraryapp.application.bookservice;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import dev.mkuwan.libraryapp.domain.bookmodel.BookModel;
+import dev.mkuwan.libraryapp.repository.entity.BookEntity;
 import lombok.Builder;
 import lombok.Data;
 
+@JsonSerialize
 @Data
 @Builder
 public class BookViewModel {
     /**
      * ID
      */
-    private String BookId;
+    private String bookId;
 
     /**
      * 全国書誌番号
      */
-    private String BookNumber;
+    private String bookNumber;
 
     /**
      * ISBN
      */
-    private String ISBN;
+    private String isbn;
 
     /**
      * ISSN
      */
-    private String ISSN;
+    private String issn;
 
     /**
      * タイトル・著者
      */
-    private String TitleAndAuthor;
+    private String titleAndAuthor;
 
     /**
      * 版
      */
-    private String Version;
+    private String version;
 
     /**
      * シリーズ
      */
-    private String Series;
+    private String series;
 
     /**
      * 出版事項
      */
-    private String PublishInfo;
+    private String publishInfo;
 
     /**
      * 大きさ等
      */
-    private String SizeInfo;
+    private String sizeInfo;
 
     /**
      * 保有数
      */
-    private Integer Amount;
+    private Integer amount;
 
     /**
      * 貸出中の数
      */
-    private Integer RentedCount;
+    private Integer rentedCount;
 
     public BookViewModel() {}
 
@@ -69,27 +72,46 @@ public class BookViewModel {
                          String titleAndAuthor, String version, String series,
                          String publishInfo, String sizeInfo,
                          Integer amount, Integer rentedCount) {
-        BookId = bookId;
-        BookNumber = bookNumber;
-        this.ISBN = ISBN;
-        this.ISSN = ISSN;
-        TitleAndAuthor = titleAndAuthor;
-        Version = version;
-        Series = series;
-        PublishInfo = publishInfo;
-        SizeInfo = sizeInfo;
-        Amount = amount;
-        RentedCount = rentedCount;
+        this.bookId = bookId;
+        this.bookNumber = bookNumber;
+        this.isbn = ISBN;
+        this.issn = ISSN;
+        this.titleAndAuthor = titleAndAuthor;
+        this.version = version;
+        this.series = series;
+        this.publishInfo = publishInfo;
+        this.sizeInfo = sizeInfo;
+        this.amount = amount;
+        this.rentedCount = rentedCount;
     }
 
     public BookViewModel fromModel(BookModel model){
-        BookId = model.getBookId();
-        TitleAndAuthor = model.getTitleAndAuthor();
-        Version = model.getVersion();
-        Series = model.getSeries();
-        PublishInfo = model.getPublishInfo();
-        Amount = model.getAmount();
-        RentedCount = model.getRentedCount();
+        bookId = model.getBookId();
+        bookNumber = model.getBookNumber();
+        isbn = model.getISBN();
+        issn = model.getISSN();
+        titleAndAuthor = model.getTitleAndAuthor();
+        version = model.getVersion();
+        series = model.getSeries();
+        publishInfo = model.getPublishInfo();
+        sizeInfo = model.getSizeInfo();
+        amount = model.getAmount();
+        rentedCount = model.getRentedCount();
+        return this;
+    }
+
+    public BookViewModel fromEntity(BookEntity entity){
+        bookId = entity.getBookId();
+        bookNumber = entity.getBookNumber();
+        isbn = entity.getIsbn();
+        issn = entity.getIssn();
+        titleAndAuthor = entity.getTitleAuthor();
+        version = entity.getVersion();
+        series = entity.getSeries();
+        publishInfo = entity.getPublishInfo();
+        sizeInfo = entity.getSizeInfo();
+        amount = entity.getAmount();
+        rentedCount = entity.getRentedCount();
         return this;
     }
 }
