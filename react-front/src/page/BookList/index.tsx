@@ -3,7 +3,7 @@ export const BookList = () => {
 
     return(
         <>
-            図書リストページ
+            図書リストページ開発開始
         </>
 
     )
