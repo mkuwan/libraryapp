@@ -33,13 +33,21 @@ public class BookService {
         return returnBookViewModels(books);
     }
 
+    public int getSearchedBooksCount(String titleAndAuthor){
+        return bookQuery.getSearchedBooksCount(titleAndAuthor);
+    }
+
     public ArrayList<BookViewModel> getBooksPageable(String titleAndAuthor, int page, int size){
         var books = bookQuery.getBooksPageable(titleAndAuthor, page, size);
         return returnBookViewModels(books);
     }
 
-    @NotNull
-    private ArrayList<BookViewModel> returnBookViewModels(List<BookEntity> books) {
+    public ArrayList<BookViewModel> getBooksOrderedPageable(String titleAndAuthor, int page, int size){
+        var books = bookQuery.getBooksOrderedPageable(titleAndAuthor, page, size);
+        return returnBookViewModels(books);
+    }
+
+    private @NotNull ArrayList<BookViewModel> returnBookViewModels(@NotNull List<BookEntity> books) {
         var viewModels = new ArrayList<BookViewModel>();
 
         books.forEach(x -> {
@@ -47,7 +55,7 @@ public class BookService {
             viewModels.add(view.fromEntity(x));
         });
 
-        viewModels.sort(Comparator.comparing(BookViewModel::getTitleAndAuthor));
+//        viewModels.sort(Comparator.comparing(BookViewModel::getTitleAndAuthor, Comparator.nullsLast(Comparator.naturalOrder())));
 
         return viewModels;
     }

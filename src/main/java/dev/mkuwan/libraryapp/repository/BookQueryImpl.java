@@ -40,4 +40,9 @@ public class BookQueryImpl implements IBookQuery {
         return bookRepositoryJpa
                 .findBookEntitiesByTitleAuthorContaining(bookTitleAndAuthor, pageable);
     }
+
+    @Override
+    public int getSearchedBooksCount(String titleAuthor) {
+        return bookRepositoryJpa.findBookEntitiesByTitleAuthorContaining(titleAuthor).size();
+    }
 }

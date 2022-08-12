@@ -65,7 +65,7 @@ public class BookEntity {
     public BookEntity(String bookId,
                       String bookNumber,
                       String isbn, String issn,
-                      String titleAndAuthor, String version, String series,
+                      String titleAuthor, String version, String series,
                       String publishInfo, String sizeInfo,
                       Integer amount, Integer rentedCount) {
         this.bookId = bookId;

@@ -13,4 +13,5 @@ public interface IBookQuery {
 
     List<BookEntity> getBooksOrderedPageable(String bookTitleAndAuthor, int page, int size);
 
+    int getSearchedBooksCount(String titleAuthor);
 }

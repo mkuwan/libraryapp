@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.UUID;
 
 
@@ -32,7 +33,8 @@ public class LibraryCommandLineRunner implements CommandLineRunner {
         if(getBooks() > 0)
             return;
 
-        for (int i = 0; i < 10; i++) {
+        ArrayList<BookModel> bookModels = new ArrayList<>();
+        for (int i = 0; i < 100; i++) {
             var book = new BookModel(UUID.randomUUID().toString(),
                     ((Integer)(1000 + i)).toString(),
                     "978-4-00-061477-" + i,
@@ -45,8 +47,11 @@ public class LibraryCommandLineRunner implements CommandLineRunner {
                     i + 1,
                     i);
 
-            bookRepository.registerBook(book);
+            bookModels.add(book);
+//            bookRepository.registerBook(book);
         }
+
+        bookRepository.registerAll(bookModels);
     }
 
     private long getBooks(){

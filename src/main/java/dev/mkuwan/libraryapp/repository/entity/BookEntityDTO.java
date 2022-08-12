@@ -16,7 +16,7 @@ public class BookEntityDTO {
                 .version(model.getVersion())
                 .series(model.getSeries())
                 .publishInfo(model.getPublishInfo())
-                .series(model.getSizeInfo())
+                .sizeInfo(model.getSizeInfo())
                 .amount(model.getAmount())
                 .rentedCount(model.getRentedCount())
                 .build();
