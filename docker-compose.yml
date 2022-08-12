@@ -5,8 +5,8 @@ services:
     container_name: library-rabbitmq
     restart: always
     ports:
-      - "15072:15672"
-      - "15073:5672"
+      - "14072:15672"
+      - "14073:5672"
 
   mariadb:
     container_name: lib-mariadb
@@ -21,7 +21,7 @@ services:
     networks:
       - mariadbnet
     ports:
-      - "15306:3306"
+      - "14306:3306"
     volumes:
       - mariadb:/var/lib/mysql
     restart: unless-stopped
@@ -31,7 +31,7 @@ services:
     container_name: lib-phpmyadmin
     restart: unless-stopped
     ports:
-      - "15080:80"
+      - "14080:80"
     environment:
       PMA_HOST: mariadb
       PMA_VERBOSE: librarydb
@@ -41,10 +41,76 @@ services:
     networks:
       - mariadbnet
 
+  mongo:
+    image: mongo
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: mongopassword
+    networks:
+      - mongodbnet
+    ports:
+      - "14017:27017"
+    volumes:
+      - ./db:/data/db
+      - ./configdb:/data/configdb
+
+  mongo-express:
+    image: mongo-express
+    restart: always
+    ports:
+      - "14081:8081"
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: root
+      ME_CONFIG_MONGODB_ADMINPASSWORD: mongopassword
+      ME_CONFIG_MONGODB_SERVER: mongo
+    depends_on:
+      - mongo
+    networks:
+      - mongodbnet
+
+  # aws localstack を TypeScriptで動作させるためのコンテナー
+#  aws-sdk-ts-container:
+#    build: .
+#    container_name: aws-sdk-ts-container
+#    privileged: true
+#    restart: always
+#    volumes:
+#      - type: bind
+#        source: ./share
+#        target: /share
+#      - type: bind
+#        source: ~/.aws
+#        target: /home/ec2-user/.aws
+
+  # aws localstack
+  localstack:
+    container_name: "${LOCALSTACK_DOCKER_NAME-localstack_main}"
+    image: localstack/localstack
+    ports:
+      - "14566:4566"              # LocalStack Gateway
+      - "14510-14559:4510-4559"   # external services port range
+      - "14053:53"                # DNS config (only required for Pro)
+      - "14053:53/udp"            # DNS config (only required for Pro)
+      - "14043:443"               # LocalStack HTTPS Gateway (only required for Pro)
+    environment:
+      - DEBUG=${DEBUG-}
+      - PERSISTENCE=${PERSISTENCE-}
+      - LAMBDA_EXECUTOR=${LAMBDA_EXECUTOR-}
+      - LOCALSTACK_API_KEY=${LOCALSTACK_API_KEY-}  # only required for Pro
+      - DOCKER_HOST=unix:///var/run/docker.sock
+    volumes:
+      - "${LOCALSTACK_VOLUME_DIR:-./volume}:/var/lib/localstack"
+      - "/var/run/docker.sock:/var/run/docker.sock"
+
+
 networks:
   mariadbnet:
+    driver: bridge
+  mongodbnet:
     driver: bridge
 
 volumes:
   pgadmin:
   mariadb:
+  mongodb:

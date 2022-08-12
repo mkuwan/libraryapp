@@ -46,7 +46,7 @@ spring:
   datasource:
     username: root
     password: mariapassword
-    url: jdbc:mariadb://localhost:15306/librarydb
+    url: jdbc:mariadb://localhost:14306/librarydb
     driver-class-name: org.mariadb.jdbc.Driver
   jpa:
     properties:
