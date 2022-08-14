@@ -11,15 +11,8 @@ import {
     TableRow
 } from "@mui/material";
 import {useState} from "react";
+import {BookViewModel} from "../../context/SearchBookContext";
 
-type BookViewModel = {
-    bookId: string
-    titleAuthor: string
-    publishInfo: string
-    sizeInfo: string
-    amount: number
-    rentedCount: number
-}
 
 const StyledTableCell = styled(TableCell)(({theme}) => ({
     [`&.${tableCellClasses.head}`]: {
