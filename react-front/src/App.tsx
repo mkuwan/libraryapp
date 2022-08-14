@@ -30,7 +30,6 @@ function App() {
               <Box sx={{ flexGrow: 1 }}>
                   <TopBar mailProps={demoMailInfo}/>
                   <div>
-                      <div>デスクトップ表示</div>
                       <Routes>
                           {menuItem.map((item, index) => (
                               <Route path={item.path}

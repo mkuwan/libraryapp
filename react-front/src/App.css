@@ -159,3 +159,25 @@ li a {
     display: block;
   }
 }
+
+.pagenation-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 10px;
+  gap: 20px 6px;
+  /*list-style-type: circle;*/
+}
+
+.page-item,
+.page-link {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 30px;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 16px;
+  height: 40px;
+  width: 40px;
+}
