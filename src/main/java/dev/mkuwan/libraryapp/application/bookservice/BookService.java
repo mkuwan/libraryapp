@@ -21,6 +21,10 @@ public class BookService {
         this.bookQuery = bookQuery;
     }
 
+    /**
+     * 全書籍リスト取得
+     * @return
+     */
     public ArrayList<BookViewModel> getBooks() {
 
         var books = bookQuery.getBooks();
