@@ -5,23 +5,17 @@ import MuiSwipeableDrawer, { SwipeableDrawerProps } from '@mui/material/Swipeabl
 import {SidebarContext} from "../../context/SidebarContext";
 import {
     Box,
-    Button,
-    Divider,
-    Fab,
-    IconButton, List, ListItemButton, ListItemIcon,ListItemText, Tooltip,
+    Divider, ListItem,
     Stack,
     SwipeableDrawer,
     Typography,
     useMediaQuery,
     Zoom
 } from "@mui/material";
-import MenuIcon from '@mui/icons-material/Menu'
-import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import Menu from "./Menu";
 import {NavLink, Route, Routes, useNavigate} from "react-router-dom";
 import {menuItem} from "./MenuItem";
-import Link from '@mui/material/Link';
+
 
 const StyledSwipeableDrawer = styled(SwipeableDrawer)<SwipeableDrawerProps>({
     overflowX: 'hidden',
@@ -39,7 +33,6 @@ const StyledSwipeableDrawer = styled(SwipeableDrawer)<SwipeableDrawerProps>({
         overflowX: 'hidden',
         transition: 'width .25s ease-in-out, box-shadow .25s ease-in-out'
     },
-
 })
 
 export const SideBar = () => {
@@ -98,7 +91,6 @@ export const SideBar = () => {
                 </Menu>
             </StyledSwipeableDrawer>
         </>
-
     )
 }
 

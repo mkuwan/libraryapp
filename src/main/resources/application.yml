@@ -21,42 +21,42 @@ spring:
       base-path: /api
 
 #  #  in use H2
-#  datasource:
-#    url: jdbc:h2:mem:book_db;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE;MODE=MySQL
-#    driver-class-name: org.h2.Driver
-#    username: sa
-#    password:
-#  sql:
-#    init:
-#      encoding: utf-8
-#      mode: always
-#  jpa:
-#    show-sql: true
-#    hibernate:
-#      ddl-auto: create-drop
-#    properties:
-#      hibernate:
-#        enable_lazy_load_no_trans: true
-#    database-platform: org.hibernate.dialect.H2Dialect
-#  h2:
-#    console:
-#      enabled: true
-
-#  in use mariadb
   datasource:
-    username: root
-    password: mariapassword
-    url: jdbc:mariadb://localhost:14306/librarydb
-    driver-class-name: org.mariadb.jdbc.Driver
+    url: jdbc:h2:mem:book_db;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE;MODE=MySQL
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+  sql:
+    init:
+      encoding: utf-8
+      mode: always
   jpa:
-    properties:
-      hibernate:
-        dialect: org.hibernate.dialect.MariaDB106Dialect
-        format_sql: true
-        enable_lazy_load_no_trans: true
+    show-sql: true
     hibernate:
       ddl-auto: create-drop
-    show-sql: true
+    properties:
+      hibernate:
+        enable_lazy_load_no_trans: true
+    database-platform: org.hibernate.dialect.H2Dialect
+  h2:
+    console:
+      enabled: true
+
+#  in use mariadb
+#  datasource:
+#    username: root
+#    password: mariapassword
+#    url: jdbc:mariadb://localhost:14306/librarydb
+#    driver-class-name: org.mariadb.jdbc.Driver
+#  jpa:
+#    properties:
+#      hibernate:
+#        dialect: org.hibernate.dialect.MariaDB106Dialect
+#        format_sql: true
+#        enable_lazy_load_no_trans: true
+#    hibernate:
+#      ddl-auto: create-drop
+#    show-sql: true
 
 logging:
   level:

@@ -6,7 +6,7 @@ import {SidebarContext} from "./context/SidebarContext";
 import {Box, Stack, useMediaQuery} from "@mui/material";
 import {ThemeProvider, createTheme, Theme} from '@mui/material/styles'
 import CssBaseline from '@mui/material/CssBaseline'
-import {Route, Routes} from "react-router-dom";
+import {NavLink, Route, Routes} from "react-router-dom";
 import {menuItem} from "./components/SideBar/MenuItem";
 
 function App() {
@@ -40,7 +40,6 @@ function App() {
                       </Routes>
                   </div>
               </Box>
-
           </Stack>
       </>
   );
