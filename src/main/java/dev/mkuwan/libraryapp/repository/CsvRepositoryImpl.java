@@ -28,4 +28,9 @@ public class CsvRepositoryImpl implements ICsvRepository {
 
         bookRepositoryJpa.saveAll(entities);
     }
+
+    @Override
+    public void SaveBook(BookModel bookModel){
+        bookRepositoryJpa.save(BookEntityDTO.fromModel(bookModel));
+    }
 }

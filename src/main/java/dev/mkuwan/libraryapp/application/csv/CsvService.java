@@ -6,6 +6,7 @@ import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.InvalidDataAccessResourceUsageException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -49,29 +50,29 @@ public class CsvService {
      * @throws IOException
      */
     public List<BookCsvViewModel> ReadCsvFile(MultipartFile file) throws IOException {
-        BufferedReader reader = new BufferedReader(
-                new InputStreamReader(file.getInputStream(), StandardCharsets.UTF_8));
+        var reader = new InputStreamReader(file.getInputStream(), StandardCharsets.UTF_8);
 
-//        CSVParser parser = new CSVParser(reader, CSVFormat.DEFAULT);
+//        CSVParser parser = new CSVParser(reader, CSVFormat.DEFAULT.withHeader().builder().build());
         var parser = CSVParser.parse(reader, CSVFormat.DEFAULT);
-        List<CSVRecord> records = parser.getRecords();
 
         List<BookCsvViewModel> bookCsvViewModels = new ArrayList<>();
-        for (CSVRecord record : records) {
-//            BookCsvViewModel csvViewModel = new BookCsvViewModel(
-//                    record.get(CsvHeader.ImportHeaders[0]),
-//                    record.get(CsvHeader.ImportHeaders[1]),
-//                    record.get(CsvHeader.ImportHeaders[2]),
-//                    record.get(CsvHeader.ImportHeaders[3]),
-//                    record.get(CsvHeader.ImportHeaders[4]),
-//                    record.get(CsvHeader.ImportHeaders[5]),
-//                    record.get(CsvHeader.ImportHeaders[6]),
-//                    record.get(CsvHeader.ImportHeaders[7])
-//            );
-            record.get(0);
-            System.out.println(CsvHeader.ImportHeaders[0]);
-            System.out.println(record.get(CsvHeader.ImportHeaders[0]));
-//            bookCsvViewModels.add(csvViewModel);
+        boolean isFirst = true;
+        for (CSVRecord record : parser.getRecords()) {
+            if(isFirst){
+                isFirst = false;
+                continue;
+            }
+            BookCsvViewModel csvViewModel = new BookCsvViewModel(
+                    record.get(CsvHeader.BOOK_NUMBER.ordinal()),
+                    record.get(CsvHeader.ISBN.ordinal()),
+                    record.get(CsvHeader.ISSN.ordinal()),
+                    record.get(CsvHeader.TITLE_AUTHOR.ordinal()),
+                    record.get(CsvHeader.VERSION.ordinal()),
+                    record.get(CsvHeader.SERIES.ordinal()),
+                    record.get(CsvHeader.PUBLISH_INFO.ordinal()),
+                    record.get(CsvHeader.SIZE_INFO.ordinal())
+            );
+            bookCsvViewModels.add(csvViewModel);
         }
 
         return bookCsvViewModels;
@@ -87,7 +88,16 @@ public class CsvService {
         csvViewModels.forEach(x -> {
             bookModels.add(x.fromViewModel());
         });
-
         csvRepository.SaveBooksFromCsv(bookModels);
+
+//        try {
+//            csvViewModels.forEach(x -> {
+//                System.out.println(x.getTitleAndAuthor());
+//                csvRepository.SaveBook(x.fromViewModel());
+//            });
+//        }
+//        catch (Exception e) {
+//            System.out.println("エラーが起きた (T.T) " + e.getMessage());
+//        }
     }
 }

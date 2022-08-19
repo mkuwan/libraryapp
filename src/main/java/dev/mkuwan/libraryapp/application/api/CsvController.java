@@ -27,7 +27,7 @@ public class CsvController {
     public ResponseEntity<String> uploadFile(@RequestParam("file")MultipartFile file) throws Exception {
         csvService.CheckCsvFormat(file);
         var data = csvService.ReadCsvFile(file);
-//        csvService.SaveBookCsvData(data);
+        csvService.SaveBookCsvData(data);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }

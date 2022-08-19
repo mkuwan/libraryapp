@@ -6,4 +6,5 @@ import java.util.ArrayList;
 
 public interface ICsvRepository {
     void SaveBooksFromCsv(ArrayList<BookModel> bookModels);
+    void SaveBook(BookModel bookModel);
 }

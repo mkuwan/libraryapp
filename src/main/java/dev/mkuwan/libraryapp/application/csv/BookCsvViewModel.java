@@ -1,10 +1,12 @@
 package dev.mkuwan.libraryapp.application.csv;
 
 import dev.mkuwan.libraryapp.domain.bookmodel.BookModel;
+import lombok.Getter;
 
 import java.util.ArrayList;
 import java.util.UUID;
 
+@Getter
 public class BookCsvViewModel {
     /**
      * ID
