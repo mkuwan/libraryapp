@@ -1,4 +1,4 @@
-import {useContext, useState} from "react";
+import {useCallback, useContext, useState} from "react";
 import {ManagerContext} from "../../context/ManagerContext";
 import {
     Button,
@@ -11,6 +11,7 @@ import {
 } from "@mui/material";
 import loginImage from '../../assets/library-image01.jpg'
 import {Visibility, VisibilityOff} from "@mui/icons-material";
+import {useNavigate} from "react-router-dom";
 
 
 const Img = styled('img')({
@@ -21,13 +22,21 @@ const Img = styled('img')({
 });
 
 
+
 export const Login = () => {
     const { goCustomerView } = useContext(ManagerContext);
     const [showPassword, setShowPassword] = useState(false);
+    const navigate = useNavigate();
 
     const handleClickShowPassword = () => {
         setShowPassword(!showPassword);
     };
+
+    const goCustomerPage = useCallback(() => {
+        // alert('goto book list page');
+        goCustomerView();
+        navigate('/');
+    },[])
 
     const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
@@ -71,7 +80,7 @@ export const Login = () => {
                                 </FormControl>
                             </CardContent>
                             <CardActions>
-                                <Button onClick={goCustomerView}
+                                <Button onClick={goCustomerPage}
                                         variant={'contained'}
                                         color={'success'}
                                         sx={{ ml: 1, mr: 7}}

@@ -1,4 +1,5 @@
 import {createContext, ReactNode, useCallback, useState} from "react";
+import {useNavigate} from "react-router-dom";
 
 
 export type ManagerContextValue = {
@@ -16,10 +17,12 @@ export const ManagerContext = createContext<ManagerContextValue>({
 });
 
 export const ManagerProvider = ({children} : {children: ReactNode}) => {
-    const [isManagerView, setIsManagerView] = useState(true);
+    const [isManagerView, setIsManagerView] = useState(false);
     const [isManagerLogin, setIsManagerLogin] = useState(false);
 
-    const goManagerView = useCallback(() => setIsManagerView(true), []);
+    const goManagerView = useCallback(() => {
+        setIsManagerView(true);
+    }, []);
     const goCustomerView = useCallback(() => {
         setIsManagerView(false);
         setIsManagerLogin(false);

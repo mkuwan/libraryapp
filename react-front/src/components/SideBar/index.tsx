@@ -1,19 +1,14 @@
-import React, {ReactNode, useContext, useState} from 'react'
+import React, {ReactNode, useCallback, useContext, useState} from 'react'
 
 import {makeStyles, styled, Theme, useTheme} from '@mui/material/styles'
 import MuiSwipeableDrawer, { SwipeableDrawerProps } from '@mui/material/SwipeableDrawer'
 import {SidebarContext} from "../../context/SidebarContext";
 import {
     Box,
-    Button,
     Divider,
-    Fab,
-    IconButton, List, ListItemButton, ListItemIcon,ListItemText, Tooltip,
     Stack,
     SwipeableDrawer,
     Typography,
-    useMediaQuery,
-    Zoom
 } from "@mui/material";
 import Menu from "./Menu";
 import {NavLink, Route, Routes, useNavigate} from "react-router-dom";
@@ -49,6 +44,11 @@ export const SideBar = () => {
     const theme = useTheme();
     const navigate = useNavigate();
 
+    const goLoginPage = useCallback(() => {
+        onClose();
+        goManagerView();
+    },[])
+
     return (
         <>
             <StyledSwipeableDrawer
@@ -70,10 +70,7 @@ export const SideBar = () => {
                     '& .MuiDrawer-paper': {
                         borderRight: 0,
                     }
-                }}
-            >
-
-
+                }}>
                 <Box height={'4rem'}
                      display="flex"
                      justifyContent="center"
@@ -110,9 +107,9 @@ export const SideBar = () => {
                          paddingRight={theme.spacing(0.5)}
                          mx={3} mt={2.5}
                          minHeight={'3rem'}>
-                        <NavLink to={'login'}
+                        <NavLink to={'/login'}
                                  key={'admin_key'}
-                                 onClick={goManagerView}
+                                 onClick={goLoginPage}
                                  style={{textDecoration: 'none'}}>
                             <Stack direction={'row'}>
                                 <AdminPanelSettingsIcon color={'action'}/>
