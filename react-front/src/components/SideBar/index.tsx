@@ -19,6 +19,7 @@ import Menu from "./Menu";
 import {NavLink, Route, Routes, useNavigate} from "react-router-dom";
 import {menuItem} from "./MenuItem";
 import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
+import AdminPanelSettingsTwoToneIcon from '@mui/icons-material/AdminPanelSettingsTwoTone';
 import {ManagerContext} from "../../context/ManagerContext";
 
 
@@ -99,8 +100,8 @@ export const SideBar = () => {
                     ))}
                 </Menu>
                 <footer style={{
-                    color: "#ebf6f7",
-                    backgroundColor: "#0f2350",
+                    color: "white",
+                    // backgroundColor: "darkgreen",
                     width: "100%",
                     position: "absolute",
                     bottom: 0,
@@ -114,8 +115,8 @@ export const SideBar = () => {
                                  onClick={goManagerView}
                                  style={{textDecoration: 'none'}}>
                             <Stack direction={'row'}>
-                                <AdminPanelSettingsIcon color={"warning"}/>
-                                <Typography color={"white"}>管理者画面</Typography>
+                                <AdminPanelSettingsIcon color={'action'}/>
+                                <Typography color={"darkgreen"}>管理者画面</Typography>
                             </Stack>
                         </NavLink>
                     </Box>

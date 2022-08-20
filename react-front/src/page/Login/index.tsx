@@ -1,56 +1,92 @@
-import {useContext} from "react";
+import {useContext, useState} from "react";
 import {ManagerContext} from "../../context/ManagerContext";
-import {Box, Button, Card, CardActions, CardContent, CardMedia, Container, IconButton} from "@mui/material";
-import {ExpandMore} from "@mui/icons-material";
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import ShareIcon from '@mui/icons-material/Share';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import {
+    Button,
+    Card,
+    CardActions,
+    CardContent,
+    Container, FormControl,
+    Grid, IconButton, Input, InputAdornment, InputLabel, OutlinedInput,
+    styled, TextField
+} from "@mui/material";
 import loginImage from '../../assets/library-image01.jpg'
+import {Visibility, VisibilityOff} from "@mui/icons-material";
+
+
+const Img = styled('img')({
+    margin: 'auto',
+    display: 'block',
+    maxWidth: '100%',
+    maxHeight: '100%',
+});
+
 
 export const Login = () => {
     const { goCustomerView } = useContext(ManagerContext);
+    const [showPassword, setShowPassword] = useState(false);
+
+    const handleClickShowPassword = () => {
+        setShowPassword(!showPassword);
+    };
+
+    const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
+        event.preventDefault();
+    };
+
     return(
-        // , display: { xs: 'none', sm: 'block', md: 'block'}
         <>
             <Container maxWidth={'md'} sx={{ mt: '2rem'}}>
                 <Card sx={{ display: 'flex' }}>
-                    <Box sx={{ display: 'flex', flexDirection: 'row'}}>
-                        <CardMedia
-                            sx={{
-                                display: { xs: 'none', sm: 'block', md: 'block'},
-                                width: 300, height: 300
-                                }}
-                            component={"image"}
-                            image={loginImage}
-                        />
-                        <CardContent sx={{flex: '1 0 auto', flexDirection: 'column'}}>
-                            コンテント
-                            <div>
-                                div
-                            </div>
-                            <Box sx={{ display: 'flex', flexDirection: 'row'}}>
-                                <Button onClick={goCustomerView}>
+                    <Grid container>
+                        <Grid item sm={6} xs={12}>
+                            <Img src={loginImage}/>
+                        </Grid>
+                        <Grid item sm={6} xs={12}>
+                            <CardContent sx={{ flexDirection: 'column' }}>
+                                <TextField
+                                    label={'ユーザーID'}
+                                    variant={'outlined'}
+                                    fullWidth={true}/>
+                                <FormControl sx={{ mr: 1, mt: 1 }} variant="outlined" fullWidth={true}>
+                                    <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
+                                    <OutlinedInput
+                                        id="outlined-adornment-password"
+                                        type={showPassword ? 'text' : 'password'}
+                                        // value={values.password}
+                                        // onChange={handleChange('password')}
+                                        endAdornment={
+                                            <InputAdornment position="end">
+                                                <IconButton
+                                                    aria-label="toggle password visibility"
+                                                    onClick={handleClickShowPassword}
+                                                    onMouseDown={handleMouseDownPassword}
+                                                    edge="end"
+                                                >
+                                                    {showPassword ? <VisibilityOff /> : <Visibility />}
+                                                </IconButton>
+                                            </InputAdornment>
+                                        }
+                                        label="Password"
+                                    />
+                                </FormControl>
+                            </CardContent>
+                            <CardActions>
+                                <Button onClick={goCustomerView}
+                                        variant={'contained'}
+                                        color={'success'}
+                                        sx={{ ml: 1, mr: 7}}
+                                        fullWidth={true}>
                                     戻る
                                 </Button>
-                                <Button onClick={goCustomerView}>
+                                <Button onClick={goCustomerView}
+                                        variant={'contained'}
+                                        sx={{ mr: 1}}
+                                        fullWidth={true}>
                                     ログイン
                                 </Button>
-                            </Box>
-                            <CardActions disableSpacing>
-                                <IconButton aria-label="add to favorites">
-                                    <FavoriteIcon />
-                                </IconButton>
-                                <IconButton aria-label="share">
-                                    <ShareIcon />
-                                </IconButton>
-                                <ExpandMore
-                                    sx={{ marginLeft: 'auto'}}
-                                >
-                                    <ExpandMoreIcon />
-                                </ExpandMore>
                             </CardActions>
-                        </CardContent>
-                    </Box>
+                        </Grid>
+                    </Grid>
                 </Card>
             </Container>
         </>
