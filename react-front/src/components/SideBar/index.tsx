@@ -1,6 +1,6 @@
 import React, {ReactNode, useContext, useState} from 'react'
 
-import {styled, Theme, useTheme} from '@mui/material/styles'
+import {makeStyles, styled, Theme, useTheme} from '@mui/material/styles'
 import MuiSwipeableDrawer, { SwipeableDrawerProps } from '@mui/material/SwipeableDrawer'
 import {SidebarContext} from "../../context/SidebarContext";
 import {
@@ -15,13 +15,12 @@ import {
     useMediaQuery,
     Zoom
 } from "@mui/material";
-import MenuIcon from '@mui/icons-material/Menu'
-import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import Menu from "./Menu";
 import {NavLink, Route, Routes, useNavigate} from "react-router-dom";
 import {menuItem} from "./MenuItem";
-import Link from '@mui/material/Link';
+import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
+import {ManagerContext} from "../../context/ManagerContext";
+
 
 const StyledSwipeableDrawer = styled(SwipeableDrawer)<SwipeableDrawerProps>({
     overflowX: 'hidden',
@@ -42,8 +41,10 @@ const StyledSwipeableDrawer = styled(SwipeableDrawer)<SwipeableDrawerProps>({
 
 })
 
+
 export const SideBar = () => {
     const { sidebarWidth, isOpen, isHidden, onOpen, onClose } = useContext(SidebarContext);
+    const { isManagerView, goManagerView, isManagerLogin } = useContext(ManagerContext);
     const theme = useTheme();
     const navigate = useNavigate();
 
@@ -68,7 +69,8 @@ export const SideBar = () => {
                     '& .MuiDrawer-paper': {
                         borderRight: 0,
                     }
-                }}>
+                }}
+            >
 
 
                 <Box height={'4rem'}
@@ -96,6 +98,28 @@ export const SideBar = () => {
                         </Box>
                     ))}
                 </Menu>
+                <footer style={{
+                    color: "#ebf6f7",
+                    backgroundColor: "#0f2350",
+                    width: "100%",
+                    position: "absolute",
+                    bottom: 0,
+                }}>
+                    <Box display={'flex'}
+                         paddingRight={theme.spacing(0.5)}
+                         mx={3} mt={2.5}
+                         minHeight={'3rem'}>
+                        <NavLink to={'login'}
+                                 key={'admin_key'}
+                                 onClick={goManagerView}
+                                 style={{textDecoration: 'none'}}>
+                            <Stack direction={'row'}>
+                                <AdminPanelSettingsIcon color={"warning"}/>
+                                <Typography color={"white"}>管理者画面</Typography>
+                            </Stack>
+                        </NavLink>
+                    </Box>
+                </footer>
             </StyledSwipeableDrawer>
         </>
 
