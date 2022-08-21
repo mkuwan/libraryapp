@@ -36,9 +36,8 @@ function App() {
                       {/*       element={<Login/>}/>*/}
                       {isManagerLogin ?
                           (
-                              <div>
-                                  管理画面
-                              </div>
+                              <Route path={"/admin"}
+                                  element={<div>管理者画面です</div>}/>
                           ) : (
                               <Route path={"/login"}
                                      element={<Login/>}/>

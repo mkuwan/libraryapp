@@ -1,4 +1,4 @@
-import {useCallback, useContext, useState} from "react";
+import React, {useCallback, useContext, useState} from "react";
 import {ManagerContext} from "../../context/ManagerContext";
 import {
     Button,
@@ -24,8 +24,10 @@ const Img = styled('img')({
 
 
 export const Login = () => {
-    const { goCustomerView } = useContext(ManagerContext);
+    const { goCustomerView, managerLogin } = useContext(ManagerContext);
     const [showPassword, setShowPassword] = useState(false);
+    const [userId, setUserId] = useState('');
+    const [password, setPassword] = useState('');
     const navigate = useNavigate();
 
     const handleClickShowPassword = () => {
@@ -42,6 +44,14 @@ export const Login = () => {
         event.preventDefault();
     };
 
+    const onLogin = () => {
+        let response = managerLogin(userId, password);
+        if(response)
+            navigate('/admin')
+        else
+            alert('ログインできませんでした')
+    }
+
     return(
         <>
             <Container maxWidth={'md'} sx={{ mt: '2rem'}}>
@@ -55,22 +65,27 @@ export const Login = () => {
                                 <TextField
                                     label={'ユーザーID'}
                                     variant={'outlined'}
-                                    fullWidth={true}/>
-                                <FormControl sx={{ mr: 1, mt: 1 }} variant="outlined" fullWidth={true}>
-                                    <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
+                                    required
+                                    onChange={(e) => {
+                                        setUserId(e.target.value);
+                                    }}
+                                    fullWidth/>
+                                <FormControl sx={{ mr: 1, mt: 1 }} variant="outlined" fullWidth>
+                                    <InputLabel htmlFor="outlined-adornment-password">Password *</InputLabel>
                                     <OutlinedInput
                                         id="outlined-adornment-password"
                                         type={showPassword ? 'text' : 'password'}
-                                        // value={values.password}
-                                        // onChange={handleChange('password')}
+                                        required
+                                        onChange={(e) => {
+                                            setPassword(e.target.value);
+                                        }}
                                         endAdornment={
                                             <InputAdornment position="end">
                                                 <IconButton
                                                     aria-label="toggle password visibility"
                                                     onClick={handleClickShowPassword}
                                                     onMouseDown={handleMouseDownPassword}
-                                                    edge="end"
-                                                >
+                                                    edge="end">
                                                     {showPassword ? <VisibilityOff /> : <Visibility />}
                                                 </IconButton>
                                             </InputAdornment>
@@ -84,13 +99,13 @@ export const Login = () => {
                                         variant={'contained'}
                                         color={'success'}
                                         sx={{ ml: 1, mr: 7}}
-                                        fullWidth={true}>
+                                        fullWidth>
                                     戻る
                                 </Button>
-                                <Button onClick={goCustomerView}
+                                <Button onClick={onLogin}
                                         variant={'contained'}
                                         sx={{ mr: 1}}
-                                        fullWidth={true}>
+                                        fullWidth>
                                     ログイン
                                 </Button>
                             </CardActions>

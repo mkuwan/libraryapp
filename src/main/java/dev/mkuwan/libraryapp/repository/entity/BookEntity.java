@@ -1,14 +1,19 @@
 package dev.mkuwan.libraryapp.repository.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
 @Data
 @Builder
+@AllArgsConstructor
+@Table(name = "Book")
 public class BookEntity {
     @Id
     private String bookId;
@@ -62,24 +67,6 @@ public class BookEntity {
      */
     private Integer rentedCount;
 
-    public BookEntity(String bookId,
-                      String bookNumber,
-                      String isbn, String issn,
-                      String titleAuthor, String version, String series,
-                      String publishInfo, String sizeInfo,
-                      Integer amount, Integer rentedCount) {
-        this.bookId = bookId;
-        this.bookNumber = bookNumber;
-        this.isbn = isbn;
-        this.issn = issn;
-        this.titleAuthor = titleAuthor;
-        this.version = version;
-        this.series = series;
-        this.publishInfo = publishInfo;
-        this.sizeInfo = sizeInfo;
-        this.amount = amount;
-        this.rentedCount = rentedCount;
-    }
 
 
     public BookEntity() {
