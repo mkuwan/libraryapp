@@ -11,6 +11,10 @@ spring:
         port: 8080
       restart:
         enabled: true
+    livereload:         # Hot Reload
+      enabled: true
+    restart:            # Hot Reload
+      enabled: true
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher

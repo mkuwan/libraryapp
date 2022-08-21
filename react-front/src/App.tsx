@@ -11,6 +11,9 @@ import {menuItem} from "./components/SideBar/MenuItem";
 import {ManagerContext} from "./context/ManagerContext";
 import {Login} from "./page/Login";
 import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
+import {ManagerTopBar} from "./components/ManagerTopBar";
+import {ManagerMenuItem} from "./components/ManagerTopBar/ManagerMenuItem";
+import {ManagerUserMenuItem} from "./components/ManagerTopBar/ManagerUserMenuItem";
 
 function App() {
 
@@ -31,18 +34,33 @@ function App() {
       <>
           {isManagerView ?
               (
-                  <Routes>
-                      {/*<Route path={"/login"}*/}
-                      {/*       element={<Login/>}/>*/}
+                  <div>
                       {isManagerLogin ?
                           (
-                              <Route path={"/admin"}
-                                  element={<div>管理者画面です</div>}/>
+                              <Stack direction={'column'}>
+                                  <ManagerTopBar/>
+                                  <div>
+                                      <Routes>
+                                          {ManagerMenuItem.map((item, index) => (
+                                              <Route path={item.path}
+                                                     element={item.content}
+                                                     key={index}/>
+                                          ))}
+                                          {ManagerUserMenuItem.map((item, index) => (
+                                              <Route path={item.path}
+                                                     element={item.content}
+                                                     key={index}/>
+                                          ))}
+                                      </Routes>
+                                  </div>
+                              </Stack>
                           ) : (
-                              <Route path={"/login"}
-                                     element={<Login/>}/>
+                              <Routes>
+                                  <Route path={"/login"}
+                                         element={<Login/>}/>
+                              </Routes>
                           )}
-                  </Routes>
+                  </div>
               ) : (
               <Stack direction={'row'}>
                   <SideBar/>

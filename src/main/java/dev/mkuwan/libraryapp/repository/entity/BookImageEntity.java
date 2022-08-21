@@ -18,9 +18,14 @@ public class BookImageEntity {
     @Id
     private String bookImageId;
 
-    private String bookEntityId;
-
     @Lob
     @Column(length = 1000)
     private byte[] bookImage;
+
+    /**
+     * @ManyToOne: 1-n の n側がキーのオーナーになる
+     */
+    @ManyToOne
+    @JoinColumn(name = "bookId")
+    private BookEntity bookEntity;
 }
