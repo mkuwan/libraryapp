@@ -8,6 +8,7 @@ import { SettingsProvider} from "./context/SettingsContext";
 import {SidebarProvider} from "./context/SidebarContext";
 import {createTheme, ThemeProvider} from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
+import {ManagerProvider} from "./context/ManagerContext";
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -18,15 +19,17 @@ root.render(
   <React.StrictMode>
       <ThemeProvider theme={theme}>
           <SettingsProvider>
-              <SidebarProvider>
-                  <BrowserRouter>
-                      {/*<Helmet>*/}
-                      {/*    <title>MK Business Software</title>*/}
-                      {/*</Helmet>*/}
-                      <CssBaseline/>
-                      <App />
-                  </BrowserRouter>
-              </SidebarProvider>
+              <ManagerProvider>
+                  <SidebarProvider>
+                      <BrowserRouter>
+                          {/*<Helmet>*/}
+                          {/*    <title>MK Business Software</title>*/}
+                          {/*</Helmet>*/}
+                          <CssBaseline/>
+                          <App />
+                      </BrowserRouter>
+                  </SidebarProvider>
+              </ManagerProvider>
           </SettingsProvider>
       </ThemeProvider>
   </React.StrictMode>
