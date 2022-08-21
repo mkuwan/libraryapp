@@ -117,8 +117,7 @@ export const BookImport = () => {
                    accept={"text/csv"}
                    ref={inputRef}
                    hidden
-                   onChange={onSelectCsvFile}
-            />
+                   onChange={onSelectCsvFile} />
             <Button onClick={buttonCsvClicked}>Select</Button>
             <Typography>
                 {uploadFile?.name}
