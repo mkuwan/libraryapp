@@ -1,14 +1,20 @@
 package dev.mkuwan.libraryapp.repository.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Data
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
+@Table(name = "Book")
 public class BookEntity {
     @Id
     private String bookId;
@@ -62,27 +68,13 @@ public class BookEntity {
      */
     private Integer rentedCount;
 
-    public BookEntity(String bookId,
-                      String bookNumber,
-                      String isbn, String issn,
-                      String titleAuthor, String version, String series,
-                      String publishInfo, String sizeInfo,
-                      Integer amount, Integer rentedCount) {
-        this.bookId = bookId;
-        this.bookNumber = bookNumber;
-        this.isbn = isbn;
-        this.issn = issn;
-        this.titleAuthor = titleAuthor;
-        this.version = version;
-        this.series = series;
-        this.publishInfo = publishInfo;
-        this.sizeInfo = sizeInfo;
-        this.amount = amount;
-        this.rentedCount = rentedCount;
-    }
-
-
-    public BookEntity() {
-
-    }
+//    /**
+//     * @OneToMany: 1-n の 1側がFKの管理をする
+//     *  内部でupdateも走るらしい。パフォーマンス的にはn側管理の方がいいとのこと
+//     *  https://zenn.dev/dev_yoon/articles/a6bbef727880a8
+//     *  https://zenn.dev/dev_yoon/articles/9b1a46bb95d168
+//     */
+//    @OneToMany
+//    @JoinColumn(name = "bookImageId")
+//    private Set<BookImageEntity> bookImageEntities = new HashSet<>();
 }

@@ -37,6 +37,10 @@ public class CsvService {
      * @param file
      */
     public void CheckCsvFormat(MultipartFile file) throws Exception {
+        System.out.println("ファイル名: " + file.getOriginalFilename());
+        System.out.println("ContentType is: " + file.getContentType());
+        System.out.println("byte: " + file.getBytes());
+
         if(!file.getContentType().equals("text/csv"))
             throw new Exception(file.getContentType() + "はcsvファイルではありません");
 
@@ -52,7 +56,7 @@ public class CsvService {
     public List<BookCsvViewModel> ReadCsvFile(MultipartFile file) throws IOException {
         var reader = new InputStreamReader(file.getInputStream(), StandardCharsets.UTF_8);
 
-//        CSVParser parser = new CSVParser(reader, CSVFormat.DEFAULT.withHeader().builder().build());
+//        CSVParser parserObsoluted = new CSVParser(reader, CSVFormat.DEFAULT.withHeader().builder().build());
         var parser = CSVParser.parse(reader, CSVFormat.DEFAULT);
 
         List<BookCsvViewModel> bookCsvViewModels = new ArrayList<>();
@@ -90,6 +94,7 @@ public class CsvService {
         });
         csvRepository.SaveBooksFromCsv(bookModels);
 
+        //  1件ずつ処理する場合はTransactionalを外してこちらを使用する
 //        try {
 //            csvViewModels.forEach(x -> {
 //                System.out.println(x.getTitleAndAuthor());
