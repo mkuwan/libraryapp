@@ -3,6 +3,7 @@ import HomeIcon from "@mui/icons-material/Home";
 import ListIcon from '@mui/icons-material/List';
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import FileUploadIcon from '@mui/icons-material/FileUpload';
+import BookImport from "../../page/BookImport";
 
 export type ManagerMenu = {
     label: string;
@@ -38,6 +39,6 @@ export const ManagerMenuItem: ManagerMenu[] = [
         path: '/admin/upload',
         icon: <FileUploadIcon/>,
         iconColor: 'lightGreen',
-        content: <>CSV Upload</>
+        content: <BookImport/>
     },
 ]

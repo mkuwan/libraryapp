@@ -27,7 +27,7 @@ function App() {
             content: 'メールその2'
         }
     ]
-    const { isHidden } = useContext(SidebarContext);
+
     const { isManagerView, goManagerView, isManagerLogin } = useContext(ManagerContext);
 
   return (

@@ -76,14 +76,14 @@ export const ManagerTopBar = () => {
     const handleOpenNavMenu = (e: React.MouseEvent<HTMLElement>) => {
         setAnchorElNav(e.currentTarget);
     }
-    const handleCloseNavMenu = (e: React.MouseEvent<HTMLElement>) => {
+    const handleCloseNavMenu = () => {
         setAnchorElNav(null);
     }
 
     const handleOpenUserMenu = (e: React.MouseEvent<HTMLElement>) => {
         setAnchorElUser(e.currentTarget);
     }
-    const handleCloseUserMenu = (e: React.MouseEvent<HTMLElement>) => {
+    const handleCloseUserMenu = () => {
         setAnchorElUser(null);
     }
 
@@ -113,8 +113,8 @@ export const ManagerTopBar = () => {
                             {ManagerMenuItem.map((page) => (
                                 <MenuItem
                                     key={page.label}
-                                    onClick={(event) => {
-                                        handleCloseNavMenu(event);
+                                    onClick={() => {
+                                        handleCloseNavMenu();
                                         navigate(page.path);
                                     }}
                                 >{page.label}</MenuItem>
@@ -128,8 +128,8 @@ export const ManagerTopBar = () => {
                     <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex'}}}>
                         {ManagerMenuItem.map((page) => (
                            <Button key={page.label}
-                                   onClick={(event) => {
-                                       handleCloseNavMenu(event);
+                                   onClick={() => {
+                                       handleCloseNavMenu();
                                        navigate(page.path)
                                    }}
                                    variant={"contained"}
@@ -159,8 +159,8 @@ export const ManagerTopBar = () => {
                             {ManagerUserMenuItem.map((page) => (
                                 <MenuItem
                                     key={page.label}
-                                    onClick={(event) => {
-                                        handleCloseUserMenu(event);
+                                    onClick={() => {
+                                        handleCloseUserMenu();
                                         if(page.label === 'ログアウト')
                                             goCustomerView();
                                         navigate(page.path);
