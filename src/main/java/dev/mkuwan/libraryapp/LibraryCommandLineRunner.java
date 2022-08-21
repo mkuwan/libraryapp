@@ -30,28 +30,27 @@ public class LibraryCommandLineRunner implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 
-        if(getBooks() > 0)
-            return;
-
-        ArrayList<BookModel> bookModels = new ArrayList<>();
-        for (int i = 0; i < 100; i++) {
-            var book = new BookModel(UUID.randomUUID().toString(),
-                    ((Integer)(1000 + i)).toString(),
-                    "978-4-00-061477-" + i,
-                    ((Integer)(2000 + i)).toString(),
-                    "本と著者" + (i + 1),
-                    (i + 1) + "版",
-                    "シリーズ" + (i + 1),
-                    "出版",
-                    "大きさ",
-                    i + 1,
-                    i);
-
-            bookModels.add(book);
-//            bookRepository.registerBook(book);
-        }
-
-        bookRepository.registerAll(bookModels);
+//        if(getBooks() > 0)
+//            return;
+//
+//        ArrayList<BookModel> bookModels = new ArrayList<>();
+//        for (int i = 0; i < 100; i++) {
+//            var book = new BookModel(UUID.randomUUID().toString(),
+//                    ((Integer)(1000 + i)).toString(),
+//                    "978-4-00-061477-" + i,
+//                    ((Integer)(2000 + i)).toString(),
+//                    "本と著者" + (i + 1),
+//                    (i + 1) + "版",
+//                    "シリーズ" + (i + 1),
+//                    "出版",
+//                    "大きさ",
+//                    i + 1,
+//                    i);
+//
+//            bookModels.add(book);
+//        }
+//
+//        bookRepository.registerAll(bookModels);
     }
 
     private long getBooks(){

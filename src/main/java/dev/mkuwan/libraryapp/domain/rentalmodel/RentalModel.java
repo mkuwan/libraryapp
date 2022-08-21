@@ -31,7 +31,7 @@ public class RentalModel {
          * 貸出中のものに延滞本がある場合は貸出できない
          */
         Rentals.forEach(x -> {
-            if(x.EndData().isAfter(LocalDate.now()))
+            if(x.EndData().isBefore(LocalDate.now()))
                 throw new IllegalArgumentException("貸出中の書籍に延滞があるため貸出できません");
         });
 

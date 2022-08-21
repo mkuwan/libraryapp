@@ -19,8 +19,12 @@ spring:
   data:
     rest:
       base-path: /api
+  servlet:
+    multipart:
+      max-file-size: 30MB
+      max-request-size: 30MB
 
-#  #  in use H2
+  #  #  in use H2
 #  datasource:
 #    url: jdbc:h2:mem:book_db;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE;MODE=MySQL
 #    driver-class-name: org.h2.Driver
@@ -57,6 +61,8 @@ spring:
     hibernate:
       ddl-auto: create-drop
     show-sql: true
+
+
 
 logging:
   level:

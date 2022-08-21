@@ -34,7 +34,6 @@ const StyledSwipeableDrawer = styled(SwipeableDrawer)<SwipeableDrawerProps>({
         overflowX: 'hidden',
         transition: 'width .25s ease-in-out, box-shadow .25s ease-in-out'
     },
-
 })
 
 
@@ -120,7 +119,6 @@ export const SideBar = () => {
                 </footer>
             </StyledSwipeableDrawer>
         </>
-
     )
 }
 

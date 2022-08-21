@@ -15,12 +15,6 @@ public record RentalInfoObject(String BookId, LocalDate StartDate, LocalDate End
 
         this.StartDate = StartDate;
 
-        /**
-         * 貸出期間は7日に固定
-         */
-        // TODO: 定数値をどこに記述するか要検討
-        this.EndData = StartDate.plusDays(7);
+        this.EndData = EndData;
     }
-
-
 }
