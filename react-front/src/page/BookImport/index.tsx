@@ -244,10 +244,7 @@ export const BookImport = () => {
                             <TableBody>
                                 {
                                     Object.keys(csvData).map((key, index) => (
-                                        <TableRow key={index}
-                                                  // sx={{ border: 1}}
-                                                  // sx={{ '&:last-child td, &:last-child th': { border: 1}}}
-                                            >
+                                        <TableRow key={index}>
                                             {Object.values(csvData[index]).map((value, index2, array) => (
                                                 <TableCell align={"left"} sx={{ border: 0.5}}>{array[index2]}</TableCell>
                                             ))}
@@ -265,24 +262,5 @@ export const BookImport = () => {
         </Container>
     )
 }
-// const renderHeader = (): ReactNode => {
-//         if(csvData){
-//             let header = Object.keys(csvData[0])
-//             return  header.map((key, index) => {
-//                 return (
-//                     <th key={index}>{key}</th>
-//                 );
-//             });
-//         }};
-//
-// const previewTable = (
-//         <>
-//             <table >
-//                 <thead>
-//                     <tr>{renderHeader}</tr>
-//                 </thead>
-//
-//             </table>
-//         </>
-//     )
+
 export default BookImport;
