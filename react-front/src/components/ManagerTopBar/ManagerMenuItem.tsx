@@ -26,12 +26,12 @@ export const ManagerMenuItem: ManagerMenu[] = [
         content: <div>管理者画面です</div>
     },
     {
-        label: '図書一覧',
+        label: '図書在庫管理',
         fontColor: 'white',
         path: '/admin/books',
         icon: <ListIcon/>,
         iconColor: 'lightGreen',
-        content: <>図書一覧</>
+        content: <>図書在庫管理</>
     },
     {
         label: 'Upload',
