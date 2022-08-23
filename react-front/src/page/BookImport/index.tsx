@@ -256,7 +256,7 @@ export const BookImport = () => {
                     </TableContainer>
 
                 ): (
-                    <Box sx={{ mt: '1rem'}}>プレビューとして10件が表示されます</Box>
+                    <Typography sx={{ mt: '1rem'}}>プレビューとして10件が表示されます</Typography>
                 )}
             </div>
         </Container>
