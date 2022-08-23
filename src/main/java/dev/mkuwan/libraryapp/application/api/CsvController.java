@@ -1,5 +1,7 @@
 package dev.mkuwan.libraryapp.application.api;
 
+import dev.mkuwan.libraryapp.application.bookservice.BookReturnType;
+import dev.mkuwan.libraryapp.application.bookservice.BookViewModel;
 import dev.mkuwan.libraryapp.application.csv.CsvService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -27,10 +29,12 @@ public class CsvController {
             csvService.CheckCsvFormat(file);
             var data = csvService.ReadCsvFile(file);
             csvService.SaveBookCsvData(data);
-            return new ResponseEntity<>(HttpStatus.OK);
+            return ResponseEntity.ok()
+                    .body("できた!!!!");
         } catch (Exception e){
             System.out.println(e.getMessage());
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return ResponseEntity.status(1000)
+                    .body("あかんかった");
         }
 
 

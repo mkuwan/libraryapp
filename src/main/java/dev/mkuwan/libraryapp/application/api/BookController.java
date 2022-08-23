@@ -3,10 +3,13 @@ package dev.mkuwan.libraryapp.application.api;
 import dev.mkuwan.libraryapp.application.bookservice.BookReturnType;
 import dev.mkuwan.libraryapp.application.bookservice.BookService;
 import dev.mkuwan.libraryapp.application.bookservice.BookViewModel;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 
+@CrossOrigin(origins = {"http://localhost:4000"})
 @RestController
 @RequestMapping(path = "/api/v1/book")
 public class BookController {
@@ -43,5 +46,10 @@ public class BookController {
 
         return new BookReturnType(allCount, viewModels);
     }
+
+//    @PostMapping(path = "/list/sample")
+//    public ResponseEntity<BookViewModel> sampleBooks(){
+//
+//    }
 
 }
