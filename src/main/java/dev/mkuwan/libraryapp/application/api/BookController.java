@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 
-@CrossOrigin(origins = {"http://localhost:4000"})
 @RestController
 @RequestMapping(path = "/api/v1/book")
 public class BookController {

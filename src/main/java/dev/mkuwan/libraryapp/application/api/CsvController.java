@@ -11,7 +11,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 
-@CrossOrigin(origins = {"http://localhost:4000"})
 @RestController
 @RequestMapping(path = "api/v1//csv")
 public class CsvController {

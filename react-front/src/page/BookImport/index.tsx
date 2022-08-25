@@ -143,33 +143,35 @@ export const BookImport = () => {
      * @param formData
      */
     const uploadCsvFile = async (formData: FormData) => {
-        try {
-            // setProgress('0%');
-            setDisableDropZone(true);
-            setEnableUpload(false);
-            const url = `${BASE_URI}/upload`;
-            await axios.post(
-                url,
-                formData,
-                // {
-                //     onUploadProgress: (event) => {
-                //         setProgress(Math.round((event.loaded * 100) / event.total) + '%');
-                //     },
-                // }
-                )
-                .then((response) => {
-                    if(response.status === 200)
-                        setProgress('完了しました');
-                    else
-                        setProgress(`エラーが起きました: ${response.data}`);
-                })
-        } catch (error){
-            console.log(error);
-        } finally {
-            setUploadFile(undefined);
-            setDisableDropZone(false);
-            setCsvData(undefined);
-        }
+        // setProgress('0%');
+        setDisableDropZone(true);
+        setEnableUpload(false);
+        const url = `${BASE_URI}/upload`;
+        await axios.post(
+            url,
+            formData,
+            // { headers: {'authorization': 'Basic Token'}, withCredentials: true },
+            // {
+            //     onUploadProgress: (event) => {
+            //         setProgress(Math.round((event.loaded * 100) / event.total) + '%');
+            //     },
+            // }
+        )
+            .then((response) => {
+                if(response.status === 200)
+                    setProgress('完了しました');
+                else
+                    setProgress(`エラーが起きました: ${response.data}`);
+            })
+            .catch((reason) => {
+                console.log(reason);
+                setProgress(reason.message);
+            })
+            .finally(() => {
+                setUploadFile(undefined);
+                setDisableDropZone(false);
+                setCsvData(undefined);
+            })
     }
 
     return(
