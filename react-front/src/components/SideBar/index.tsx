@@ -106,7 +106,7 @@ export const SideBar = () => {
                          paddingRight={theme.spacing(0.5)}
                          mx={3} mt={2.5}
                          minHeight={'3rem'}>
-                        <NavLink to={'/login'}
+                        <NavLink to={'/admin/login'}
                                  key={'admin_key'}
                                  onClick={goLoginPage}
                                  style={{textDecoration: 'none'}}>

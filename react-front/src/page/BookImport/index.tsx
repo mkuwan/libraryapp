@@ -28,7 +28,6 @@ export const BookImport = () => {
     const inputRef = useRef<HTMLInputElement>(null);
     const [uploadFile, setUploadFile] =useState<File | undefined>();
     const [csvData, setCsvData] = useState<string[][]>();
-    const [jsonCsv, setJsonCsv] = useState<string>();
     const [progress, setProgress] = useState<string>('');
     const [uploading, setUploading] = useState(false);
     const [enableUpload, setEnableUpload] = useState(false);
@@ -36,16 +35,6 @@ export const BookImport = () => {
     const BASE_URI = `${API_URL}${API_VERSION1}${CONTROLLER_CSV}`;
     const accept: Accept = {'text/csv': ['.csv']};
 
-
-
-    useEffect(() => {
-
-        if(csvData){
-            let jsonFormat = JSON.stringify(csvData);
-            console.log(jsonFormat);
-            setJsonCsv(jsonFormat);
-        }
-    },[csvData]);
 
 
     /**

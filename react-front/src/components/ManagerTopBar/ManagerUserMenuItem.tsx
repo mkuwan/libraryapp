@@ -2,6 +2,7 @@ import React, {ReactNode} from "react";
 import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
 import HomeIcon from "@mui/icons-material/Home";
 import Top from "../../page/Top";
+import BookInfo from "../../page/BookInfo";
 
 export type ManagerUserMenu = {
     label: string;

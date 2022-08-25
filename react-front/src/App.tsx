@@ -56,7 +56,7 @@ function App() {
                               </Stack>
                           ) : (
                               <Routes>
-                                  <Route path={"/login"}
+                                  <Route path={"/admin/login"}
                                          element={<Login/>}/>
                               </Routes>
                           )}
