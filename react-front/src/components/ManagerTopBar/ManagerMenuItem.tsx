@@ -32,7 +32,7 @@ export const ManagerMenuItem: ManagerMenu[] = [
         path: '/admin/books',
         icon: <ListIcon/>,
         iconColor: 'lightGreen',
-        content: <>図書在庫管理</>
+        content: <BookInfo/>
     },
     {
         label: 'Upload',
@@ -41,13 +41,5 @@ export const ManagerMenuItem: ManagerMenu[] = [
         icon: <FileUploadIcon/>,
         iconColor: 'lightGreen',
         content: <BookImport/>
-    },
-    {
-        label: '書籍情報',
-        fontColor: 'white',
-        path: '/admin/book',
-        icon: <HomeIcon/>,
-        iconColor: 'lightGreen',
-        content: <BookInfo/>
     },
 ]

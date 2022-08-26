@@ -9,6 +9,8 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import React, {ReactNode, useEffect, useState} from "react";
 import {Box, TableCell} from "@mui/material";
 import Grid2 from "@mui/material/Unstable_Grid2";
+import {BorderAll} from "mdi-material-ui";
+import {BorderAllRounded} from "@mui/icons-material";
 
 type BookImageProps = {
     isbn?: string
@@ -109,11 +111,11 @@ export const BookImage = (props: BookImageProps) => {
 
     return(
         <Grid2 container={true} wrap={"nowrap"}>
-            <Box sx={{ width: 200, height: 200}}>
+            <Box >
                 {bookInfo? (
-                    <>
+                    <div>
                         {generateBookData(bookInfo)}
-                    </>
+                    </div>
                 ) : (
                     <div >
                         not found
