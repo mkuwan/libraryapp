@@ -35,7 +35,7 @@ export const ManagerMenuItem: ManagerMenu[] = [
         content: <BookInfo/>
     },
     {
-        label: 'Upload',
+        label: '目録登録',
         fontColor: 'white',
         path: '/admin/upload',
         icon: <FileUploadIcon/>,
