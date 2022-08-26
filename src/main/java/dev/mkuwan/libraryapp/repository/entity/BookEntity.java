@@ -29,6 +29,11 @@ public class BookEntity {
     private String isbn;
 
     /**
+     * ISBN ハイフンなし
+     */
+    private String isbn_no_hyphen;
+
+    /**
      * ISSN
      */
     private String issn;
