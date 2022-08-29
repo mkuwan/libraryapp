@@ -28,7 +28,6 @@ export const BookImport = () => {
     const inputRef = useRef<HTMLInputElement>(null);
     const [uploadFile, setUploadFile] =useState<File | undefined>();
     const [csvData, setCsvData] = useState<string[][]>();
-    const [jsonCsv, setJsonCsv] = useState<string>();
     const [progress, setProgress] = useState<string>('');
     const [uploading, setUploading] = useState(false);
     const [enableUpload, setEnableUpload] = useState(false);
@@ -36,16 +35,6 @@ export const BookImport = () => {
     const BASE_URI = `${API_URL}${API_VERSION1}${CONTROLLER_CSV}`;
     const accept: Accept = {'text/csv': ['.csv']};
 
-
-
-    useEffect(() => {
-
-        if(csvData){
-            let jsonFormat = JSON.stringify(csvData);
-            console.log(jsonFormat);
-            setJsonCsv(jsonFormat);
-        }
-    },[csvData]);
 
 
     /**
@@ -143,33 +132,35 @@ export const BookImport = () => {
      * @param formData
      */
     const uploadCsvFile = async (formData: FormData) => {
-        try {
-            // setProgress('0%');
-            setDisableDropZone(true);
-            setEnableUpload(false);
-            const url = `${BASE_URI}/upload`;
-            await axios.post(
-                url,
-                formData,
-                // {
-                //     onUploadProgress: (event) => {
-                //         setProgress(Math.round((event.loaded * 100) / event.total) + '%');
-                //     },
-                // }
-                )
-                .then((response) => {
-                    if(response.status === 200)
-                        setProgress('完了しました');
-                    else
-                        setProgress(`エラーが起きました: ${response.data}`);
-                })
-        } catch (error){
-            console.log(error);
-        } finally {
-            setUploadFile(undefined);
-            setDisableDropZone(false);
-            setCsvData(undefined);
-        }
+        // setProgress('0%');
+        setDisableDropZone(true);
+        setEnableUpload(false);
+        const url = `${BASE_URI}/upload`;
+        await axios.post(
+            url,
+            formData,
+            // { headers: {'authorization': 'Basic Token'}, withCredentials: true },
+            // {
+            //     onUploadProgress: (event) => {
+            //         setProgress(Math.round((event.loaded * 100) / event.total) + '%');
+            //     },
+            // }
+        )
+            .then((response) => {
+                if(response.status === 200)
+                    setProgress('完了しました');
+                else
+                    setProgress(`エラーが起きました: ${response.data}`);
+            })
+            .catch((reason) => {
+                console.log(reason);
+                setProgress(reason.message);
+            })
+            .finally(() => {
+                setUploadFile(undefined);
+                setDisableDropZone(false);
+                setCsvData(undefined);
+            })
     }
 
     return(

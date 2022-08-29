@@ -134,7 +134,7 @@ export const ManagerTopBar = () => {
                                    }}
                                    variant={"contained"}
                                    color={"secondary"}
-                                   sx={{ mx:1, color: 'white', backgroundColor: '#006064'}}
+                                   sx={{ mx:1, maxHeight: 40, color: 'white', backgroundColor: '#006064'}}
                                    startIcon={page.icon}
                                    // sx={{ my: 2, color: 'white', display: 'block'}}
                            >{page.label}</Button>

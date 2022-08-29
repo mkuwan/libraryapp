@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 
-@CrossOrigin(origins = {"http://localhost:4000"})
 @RestController
 @RequestMapping(path = "/api/v1/book")
 public class BookController {
@@ -36,6 +35,16 @@ public class BookController {
         return new BookReturnType(allCount, viewModels);
     }
 
+    @PostMapping(path = "/list/search2")
+    public BookReturnType getBooksForAdmin(@RequestParam(value = "titleAuthorIsbn") String titleAuthorIsbn,
+                                           @RequestParam(value = "page") int page,
+                                           @RequestParam(value = "size") int size){
+        var allCount = bookService.getSearchAdminBooksCount(titleAuthorIsbn);
+        var viewModels = bookService.getBooksAdminPageable(titleAuthorIsbn, page - 1, size);
+
+        return new BookReturnType(allCount, viewModels);
+    }
+
     @PostMapping(path = "/list/page")
     public BookReturnType getBooks(@RequestParam(value = "titleAuthor") String titleAuthor,
                                    @RequestParam(value = "page") int page,
@@ -47,9 +56,20 @@ public class BookController {
         return new BookReturnType(allCount, viewModels);
     }
 
-//    @PostMapping(path = "/list/sample")
-//    public ResponseEntity<BookViewModel> sampleBooks(){
-//
-//    }
+    @PostMapping(path = "/register/amount")
+    public ResponseEntity<String> registerBookAmount(@RequestParam(value="bookId") String bookId,
+                                               @RequestParam(value="amount") int amount){
+        try {
+            var book = bookService.getBook(bookId);
+            var updated = book.changeAmount(amount);
+
+            System.out.println("パラメータ: " + amount + ", 変更後の蔵書数: " + updated.getAmount());
+            bookService.RegisterBook(updated);
+
+            return ResponseEntity.ok().body("処理しました");
+        } catch (Exception e){
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
 
 }

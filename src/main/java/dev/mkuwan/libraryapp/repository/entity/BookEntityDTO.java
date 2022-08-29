@@ -1,6 +1,7 @@
 package dev.mkuwan.libraryapp.repository.entity;
 
 import dev.mkuwan.libraryapp.domain.bookmodel.BookModel;
+import dev.mkuwan.libraryapp.repository.util.HyphenTool;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
@@ -11,6 +12,7 @@ public class BookEntityDTO {
                 .bookId(model.getBookId())
                 .bookNumber(model.getBookNumber())
                 .isbn(model.getISBN())
+                .isbnNoHyphen(HyphenTool.RemoveHyphen(model.getISBN()))
                 .issn(model.getISSN())
                 .titleAuthor(model.getTitleAndAuthor())
                 .version(model.getVersion())
