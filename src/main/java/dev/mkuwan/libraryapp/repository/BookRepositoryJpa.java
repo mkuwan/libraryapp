@@ -13,4 +13,10 @@ public interface BookRepositoryJpa extends JpaRepository<BookEntity, String> {
     List<BookEntity> findBookEntitiesByTitleAuthorContaining(String value);
 
     List<BookEntity> findBookEntitiesByTitleAuthorContaining(String value, Pageable pageable);
+
+    List<BookEntity> findBookEntitiesByTitleAuthorContainingOrIsbnNoHyphenContaining(String titleAuthor, String isbn);
+    List<BookEntity> findBookEntitiesByTitleAuthorContainingOrIsbnNoHyphenContaining(String titleAuthor, String isbn, Pageable pageable);
+
+    int countBookEntitiesByTitleAuthorContainingOrIsbnNoHyphenContaining(String titleAuthor, String isbn);
+
 }

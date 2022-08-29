@@ -1,61 +1,16 @@
 import axios from "axios";
-import {
-    useQuery,
-    useQueryClient,
-    QueryClient,
-    QueryClientProvider, UseQueryOptions, useMutation,
-} from "@tanstack/react-query";
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import React, {ReactNode, useEffect, useState} from "react";
 import {Box, TableCell} from "@mui/material";
 import Grid2 from "@mui/material/Unstable_Grid2";
-import {BorderAll} from "mdi-material-ui";
-import {BorderAllRounded} from "@mui/icons-material";
 
 type BookImageProps = {
     isbn?: string
 }
 
-// const useApi = <TQueryKey extends [string, Record<string, unknown>?],
-//                 TQueryFuncData,
-//                 TError,
-//                 TData = TQueryFuncData>
-//     (queryKey: TQueryKey,
-//        fetcher: (params: TQueryKey[1]) => Promise<TQueryFuncData>,
-//        options?: Omit<UseQueryOptions<unknown, TError, TData, TQueryKey>, 'queryKey' | 'queryFn'>) => {
-//
-//     return useQuery({
-//         queryKey,
-//         queryFn: async () => fetcher(queryKey[1]),
-//         ...options
-//     })
-// }
-//
-// const useApiTasks = (isbn: string) =>
-//     useApi(
-//         /**
-//          * 第1引数 QueryKey、2番めにはデータ取得関数に渡すパラメーターを渡す
-//          * パラメーターがそのまま QueryKeyとなる
-//          */
-//         ['bookIsbn', {isbn}],
-//
-//         /**
-//          * 第2引数 第1引数の2番目の値がそのままデータ取得用の1つ目の引数に入る
-//          * 2つ目にはuseApiで取得したaccessTokenが入る
-//          * @param isbn
-//          */
-//         async (isbn) => axios.get(`https://api.openbd.jp/v1/get?isbn=${isbn}`),
-//
-//         /**
-//          * 第3引数 useQueryのオプション
-//          */
-//         {
-//             enabled: !!isbn,
-//         }
-//     )
-
 
 export const BookImage = (props: BookImageProps) => {
+
+
 
     const [bookInfo, setBookInfo] = useState<string[][]>();
 
@@ -66,15 +21,16 @@ export const BookImage = (props: BookImageProps) => {
                 .then(result => {
                     if(result.data[0]){
                         setBookInfo(result.data);
+                    } else{
+                        setBookInfo([]);
                     }
-
                 })
                 .catch(error => {
                     console.log(error.message);
                 });
         }
         func().then();
-    }, [])
+    }, [bookInfo])
 
     const generateBookData = (data: { [x: string]: any; }) => {
         const generatedData = Object.keys(data)
@@ -95,10 +51,6 @@ export const BookImage = (props: BookImageProps) => {
 
     const generateElement = (key: string, value: string) => {
         return (
-            // <div key={key} className="row">
-            //     <div className="col-xs-6 ins-label">{key}</div>
-            //     <div className="col-xs-6">{value}</div>
-            // </div>
             <div >
                 <img src={value}
                      style={{ maxWidth: 150, maxHeight: 200}}
@@ -114,7 +66,7 @@ export const BookImage = (props: BookImageProps) => {
             <Box >
                 {bookInfo? (
                     <div>
-                        {generateBookData(bookInfo)}
+                        {bookInfo ? (generateBookData(bookInfo)): ('')}
                     </div>
                 ) : (
                     <div >

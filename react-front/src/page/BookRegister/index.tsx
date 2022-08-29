@@ -17,6 +17,11 @@ import {
 import React, {ChangeEvent, useCallback, useEffect, useMemo, useRef, useState} from "react";
 import SearchIcon from '@mui/icons-material/Search';
 import {Text} from "mdi-material-ui";
+import {API_URL, API_VERSION1, CONTROLLER_BOOK} from "../../constant/HostData";
+import axios, {AxiosResponse} from "axios";
+
+
+const BASE_URI = `${API_URL}${API_VERSION1}${CONTROLLER_BOOK}`;
 
 type BookType = {
     bookId: string;
@@ -32,6 +37,16 @@ type BookType = {
     rentedCount?: number;
 }
 
+
+type ResponseDataType = {
+    allCount: number,
+    bookViewModels: BookType[]
+}
+
+type SearchType = {
+    value: string,
+    page: number
+}
 
 const demoData: BookType[] = [
     {
@@ -74,8 +89,6 @@ const demoData: BookType[] = [
         rentedCount: 10
     },
 ]
-// 978-4-77-419039-6
-// 978-4-01-094982-5
 
 /**
  * React.memo, useMemo, useCallbackはそれぞれメモ化する対象が違います
@@ -157,15 +170,16 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 
-export const BookInfo = () => {
+export const BookRegister = () => {
     const [searchValue, setSearchValue] = useState('');
-    const [bookList, setBookList] = useState<BookType[]>(demoData);
-    const [page, setPage] = useState(1);
+    const [bookList, setBookList] = useState<BookType[]>([]);
+    const [pageNum, setPageNum] = useState(1);
     const [pageCount, setPageCount] =useState(1);
     const [selectedBook, setSelectedBook] = useState<BookType>();
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
+    const pageSize: number = 5;
 
     const style = {
         position: 'absolute' as 'absolute',
@@ -179,42 +193,62 @@ export const BookInfo = () => {
         p: 2,
     };
 
-    const ModalBookCount = () => {
+
+
+
+    const onUpdateHandler = () => {
+        if(!selectedBook)
+            return;
+
+        const url = `${BASE_URI}/register/amount`;
+
+        axios.post(
+            url,
+            {
+                    bookId: selectedBook.bookId, amount: selectedBook.amount
+            }
+        )
+            .then((response) => {
+                if(response.status === 200){
+                    let updating = bookList.find(x => x.bookId === selectedBook.bookId);
+                    if(updating)
+                        updating.amount = selectedBook.amount;
+                }
+            })
+            .catch((reason) => {
+                console.log(reason);
+            })
+            .finally(() => {
+
+            })
+    }
+
+    /**
+     * 蔵書数変更用Modal View
+     * @constructor
+     */
+    const ModalBookCount =  () => {
         const [inputError, setInputError] = useState(false);
-        const inputRef = useRef(null);
-
-        const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
-            // const NUMERIC_REGEX = '/[^0-9]/g';
-            //
-            // const onlyNums = e.target.value.replace(/[^0-9]/g, '');
-            // if(onlyNums.length > 3){
-            //     setInputError(true);
-            // } else{
-            //     setInputError(false);
-            // }
-            // if(inputRef.current){
-            //     const ref = inputRef.current;
-            //     if(ref){
-            //         setInputError(e.target.validity.valid);
-            //     }else{
-            //         setInputError(false);
-            //     }
-            // }
-            setInputError(!e.target.validity.valid);
-        }
+        const inputField = useRef<HTMLInputElement>(null);
 
 
+        useEffect(() => {
+            if(inputField.current)
+               inputField.current.focus();
+           // alert('focus')
+        },[inputField])
 
         return (
             <React.Fragment>
                 <Modal
                     hideBackdrop
                     open={open}
+                    onLoad={() => inputField.current?.focus()}
                     onClose={handleClose}
                     aria-labelledby="set-book-count"
                     aria-describedby="set-book-count">
                     <Box sx={{ ...style,  textOverflow: "ellipsis" }}>
-                        <Typography noWrap fontWeight={"bold"}>蔵書数変更処理</Typography>
+                        <Typography noWrap fontWeight={"bold"} >蔵書数変更処理</Typography>
                         <p/>
                         <Typography noWrap>{selectedBook?.titleAndAuthor}</Typography>
 
@@ -224,17 +258,19 @@ export const BookInfo = () => {
                                        size={"small"}
                                        inputProps={{ style:{textAlign: 'center'}}}
                                        sx={{ fontSize: '26', width: '5rem'}}
-                                       defaultValue={selectedBook?.amount}/>
+                                       value={selectedBook?.amount}/>
                             <Typography display={"inline"} sx={{ fontSize: 'h5.fontSize'}} >&emsp;&rarr;&emsp;</Typography>
                             <TextField focused
+                                       inputRef={inputField}
                                        error={inputError}
-                                       inputRef={inputRef}
-                                       onChange={(event) =>
-                                           handleChange(event)}
+                                       onChange={(e) =>{
+                                           setInputError(!e.target.validity.valid);
+                                       }}
                                        inputProps={{ inputMode: 'numeric',
                                            pattern: '^([1-9]|[1-9][0-9]|[1-9][0-9][0-9])$',
                                            maxLength: 3,
                                            style: {textAlign: 'center'}}}
+                                       autoFocus={true}
                                        size={"small"}
                                        sx={{ fontSize: '26', width: '5rem', }}
                                        placeholder="変更後"
@@ -243,7 +279,11 @@ export const BookInfo = () => {
 
                         <div style={{ display: 'flex', marginTop: '1rem', alignItems: 'center', justifyContent: 'end'}}>
                             <Button onClick={handleClose}>Cancel</Button>
-                            <Button onClick={handleClose}>更新</Button>
+                            <Button onClick={() => {
+                                onUpdateHandler();
+                                handleClose();
+                            }}
+                            >更新</Button>
                         </div>
 
                     </Box>
@@ -252,24 +292,50 @@ export const BookInfo = () => {
         );
     };
 
-    const SearchBookButton = React.memo(() => {
-        return(
-            <Button variant={"contained"}
-                    onClick={() => {
-                        if(searchValue)
-                            handleSearch(searchValue);
-                    }}>検索</Button>
-        )
-    });
 
-    // TODO: 書籍情報取得処理 => setBookInfoへ
-    const handleSearch = useCallback((value: string) =>{
+    /**
+     * 書籍情報取得処理
+     * @param
+     */
+    const handleSearch = useCallback((props: SearchType) =>{
+
+        const url = `${BASE_URI}/list/search2`
+
+        console.log(`検索ページ ${props.page}`)
+
+
         const f = async() => {
-            await alert(value);
+            await axios.get<ResponseDataType>(
+                url,
+                { params: {
+                        titleAuthorIsbn: props.value, page: props.page, size: pageSize
+                    }})
+                .then((response) => {
+                    if(response.status === 200){
+                        console.log(`${response.data.allCount}件取得`)
+                        setBookList([]);
+                        setBookList(response.data.bookViewModels);
+                        if(props.page === 1)
+                            calculatePage(response.data.allCount);
+                    }
+                })
+                .catch((reason) => {
+                    console.log(reason);
+                })
+                .finally(() => {
+
+                })
         }
         f().then();
     }, [])
 
+    const calculatePage = (allCount: number) => {
+        // 切り上げ
+        const pages = Math.ceil(allCount / pageSize);
+
+        setPageCount(pages);
+        setPageNum(1);
+    }
 
 
     return(
@@ -287,7 +353,11 @@ export const BookInfo = () => {
                                          }}
                                          onKeyDown={(event) => {
                                              if(event.key==='Enter' && searchValue){
-                                                 handleSearch(searchValue);
+                                                 const search: SearchType = {
+                                                     value: searchValue,
+                                                     page: 1
+                                                 }
+                                                 handleSearch(search)
                                              }
                                          }}
                         />
@@ -302,7 +372,9 @@ export const BookInfo = () => {
                     marginBottom: '1rem'}}>
                     <Grid display={"flex"} sx={{ m: 1 }}>
                         <Grid item style={{ width: '150px', marginRight: 0 }}>
-                            <BookImage isbn={book?.isbn}/>
+                            <Box width={'150px'} height={'200px'}>
+                                <BookImage isbn={book?.isbn}/>
+                            </Box>
                             <div>
                                 <Typography justifyContent={"center"} display={"inline"}>蔵書数: </Typography>
                                 <Typography display={"inline"}>{book.amount}</Typography>
@@ -319,7 +391,7 @@ export const BookInfo = () => {
                                     }}>蔵書数編集</Button>
                             <ModalBookCount/>
                         </Grid>
-                        <Grid item >
+                        <Grid item marginLeft={1}>
                             <Grid item direction={'column'}>
                                 <div>
                                     <HeaderText  value={'タイトル・著者'}/>
@@ -366,8 +438,16 @@ export const BookInfo = () => {
                             color={"primary"}
                             showFirstButton={true}
                             showLastButton={true}
-                            page={page}
-                            onChange={(event, page) => setPage(page)}
+                            onChange={(event, pageNumber) => {
+                                setPageNum(pageNumber);
+                                console.log(pageNumber);
+                                const search: SearchType = {
+                                    value: searchValue,
+                                    page: pageNumber
+                                }
+                                handleSearch(search)
+                            }}
+                            page={pageNum}
                             sx={{
                                 display: 'inline-block'
                             }}
@@ -380,4 +460,4 @@ export const BookInfo = () => {
     )
 }
 
-export default BookInfo;
+export default BookRegister;

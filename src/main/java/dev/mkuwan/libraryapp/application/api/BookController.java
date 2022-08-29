@@ -35,6 +35,16 @@ public class BookController {
         return new BookReturnType(allCount, viewModels);
     }
 
+    @GetMapping(path = "/list/search2")
+    public BookReturnType getBooksForAdmin(@RequestParam(value = "titleAuthorIsbn") String titleAuthorIsbn,
+                                           @RequestParam(value = "page") int page,
+                                           @RequestParam(value = "size") int size){
+        var allCount = bookService.getSearchAdminBooksCount(titleAuthorIsbn);
+        var viewModels = bookService.getBooksAdminPageable(titleAuthorIsbn, page - 1, size);
+
+        return new BookReturnType(allCount, viewModels);
+    }
+
     @PostMapping(path = "/list/page")
     public BookReturnType getBooks(@RequestParam(value = "titleAuthor") String titleAuthor,
                                    @RequestParam(value = "page") int page,
@@ -46,9 +56,18 @@ public class BookController {
         return new BookReturnType(allCount, viewModels);
     }
 
-//    @PostMapping(path = "/list/sample")
-//    public ResponseEntity<BookViewModel> sampleBooks(){
-//
-//    }
+    @PostMapping(path = "/register/amount")
+    public ResponseEntity<String> registerBookAmount(@RequestParam(value="bookId") String bookId,
+                                               @RequestParam(value="amount") int amount){
+        try {
+            var book = bookService.getBook(bookId);
+            book.changeAmount(amount);
+            bookService.RegisterBook(book);
+
+            return ResponseEntity.ok().body("処理しました");
+        } catch (Exception e){
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
 
 }

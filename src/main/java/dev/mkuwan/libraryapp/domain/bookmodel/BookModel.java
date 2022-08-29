@@ -78,6 +78,17 @@ public class BookModel {
         RentedCount = rentedCount;
     }
 
+    public void changeAmount(int changed){
+        if(changed < 0)
+            throw new IllegalArgumentException("蔵書数を0より小さくできません");
+
+        if(changed < this.RentedCount){
+            throw new IllegalArgumentException("蔵書数を貸出数より小さくはできません");
+        }
+
+        this.Amount = changed;
+    }
+
     // TODO: 貸出
     // ルール: 貸出禁止図書は貸出できない
     //        貸出最大数を越えて貸出はできない

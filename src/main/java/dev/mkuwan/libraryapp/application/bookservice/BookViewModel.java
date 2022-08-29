@@ -114,4 +114,18 @@ public class BookViewModel {
         rentedCount = entity.getRentedCount();
         return this;
     }
+
+    public BookModel fromEntityToModel(BookEntity entity){
+        return new BookModel(entity.getBookId(),
+                entity.getBookNumber(),
+                entity.getIsbn(),
+                entity.getIssn(),
+                entity.getTitleAuthor(),
+                entity.getVersion(),
+                entity.getSeries(),
+                entity.getPublishInfo(),
+                entity.getSizeInfo(),
+                entity.getAmount(),
+                entity.getRentedCount());
+    }
 }

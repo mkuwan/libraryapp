@@ -4,7 +4,7 @@ import ListIcon from '@mui/icons-material/List';
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import FileUploadIcon from '@mui/icons-material/FileUpload';
 import BookImport from "../../page/BookImport";
-import BookInfo from "../../page/BookInfo";
+import BookRegister from "../../page/BookRegister";
 
 export type ManagerMenu = {
     label: string;
@@ -32,7 +32,7 @@ export const ManagerMenuItem: ManagerMenu[] = [
         path: '/admin/books',
         icon: <ListIcon/>,
         iconColor: 'lightGreen',
-        content: <BookInfo/>
+        content: <BookRegister/>
     },
     {
         label: '目録登録',

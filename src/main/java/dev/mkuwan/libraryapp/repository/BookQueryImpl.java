@@ -8,6 +8,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Optional;
 
 @Component
 public class BookQueryImpl implements IBookQuery {
@@ -18,6 +19,11 @@ public class BookQueryImpl implements IBookQuery {
     }
 
     @Override
+    public Optional<BookEntity> getBook(String bookId) {
+        return bookRepositoryJpa.findById(bookId);
+    }
+
+    @Override
     public List<BookEntity> getBooks() {
         return bookRepositoryJpa.findAll();
     }
@@ -25,6 +31,18 @@ public class BookQueryImpl implements IBookQuery {
     @Override
     public List<BookEntity> getBooks(String bookTitleAndAuthor) {
         return bookRepositoryJpa.findBookEntitiesByTitleAuthorContaining(bookTitleAndAuthor);
+    }
+
+    @Override
+    public List<BookEntity> getBooksForAdmin(String bookTitleAuthorIsbn) {
+        return bookRepositoryJpa.findBookEntitiesByTitleAuthorContainingOrIsbnNoHyphenContaining(bookTitleAuthorIsbn, bookTitleAuthorIsbn);
+    }
+
+    @Override
+    public List<BookEntity> getBooksForAdminPageable(String bookTitleAuthorIsbn, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return bookRepositoryJpa
+                .findBookEntitiesByTitleAuthorContainingOrIsbnNoHyphenContaining(bookTitleAuthorIsbn, bookTitleAuthorIsbn, pageable);
     }
 
     @Override
@@ -44,5 +62,10 @@ public class BookQueryImpl implements IBookQuery {
     @Override
     public int getSearchedBooksCount(String titleAuthor) {
         return bookRepositoryJpa.findBookEntitiesByTitleAuthorContaining(titleAuthor).size();
+    }
+
+    @Override
+    public int getSearchAdminBooksCount(String titleAuthorIsbn) {
+        return bookRepositoryJpa.countBookEntitiesByTitleAuthorContainingOrIsbnNoHyphenContaining(titleAuthorIsbn, titleAuthorIsbn);
     }
 }

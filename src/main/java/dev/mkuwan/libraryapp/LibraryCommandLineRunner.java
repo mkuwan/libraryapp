@@ -53,7 +53,7 @@ public class LibraryCommandLineRunner implements CommandLineRunner {
 //        bookRepository.registerAll(bookModels);
     }
 
-    private long getBooks(){
-        return bookRepository.getBooksCount();
-    }
+//    private long getBooks(){
+//        return bookRepository.getBooksCount();
+//    }
 }

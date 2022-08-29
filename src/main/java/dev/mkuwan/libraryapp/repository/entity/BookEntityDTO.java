@@ -12,7 +12,7 @@ public class BookEntityDTO {
                 .bookId(model.getBookId())
                 .bookNumber(model.getBookNumber())
                 .isbn(model.getISBN())
-                .isbn_no_hyphen(HyphenTool.RemoveHyphen(model.getISBN()))
+                .isbnNoHyphen(HyphenTool.RemoveHyphen(model.getISBN()))
                 .issn(model.getISSN())
                 .titleAuthor(model.getTitleAndAuthor())
                 .version(model.getVersion())

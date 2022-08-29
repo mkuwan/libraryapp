@@ -31,7 +31,7 @@ public class BookEntity {
     /**
      * ISBN ハイフンなし
      */
-    private String isbn_no_hyphen;
+    private String isbnNoHyphen;
 
     /**
      * ISSN

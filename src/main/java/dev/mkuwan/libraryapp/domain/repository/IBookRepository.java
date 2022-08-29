@@ -19,6 +19,6 @@ public interface IBookRepository {
 
     void registerAll(List<BookModel> bookModels);
 
-
     long getBooksCount();
+
 }
