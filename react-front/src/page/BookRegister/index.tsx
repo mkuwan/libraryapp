@@ -33,8 +33,8 @@ type BookType = {
     series?: string;
     publishInfo?: string;
     sizeInfo?: string;
-    amount?: number;
-    rentedCount?: number;
+    amount: number;
+    rentedCount: number;
 }
 
 
@@ -48,47 +48,6 @@ type SearchType = {
     page: number
 }
 
-const demoData: BookType[] = [
-    {
-    bookId: '1-abc',
-    bookNumber: '984612472',
-    isbn:'978-4-296-10883-1',
-    issn: '0000111',
-    titleAndAuthor: '何かの技術書1 234 56 1231 1564 12154 156789 78945 6 1564 12154 156789 78945 61230 135',
-    version: '第2版',
-    series: 'シリーズ1',
-    publishInfo: '技術評論社',
-    sizeInfo: '100p',
-    amount: 12,
-    rentedCount: 0
-    },
-    {
-        bookId: '2-efg',
-        bookNumber: '984612472',
-        isbn:'978-4-77-419039-6',
-        issn: '0000111',
-        titleAndAuthor: '何かの技術書2 234 56 1231 1564 12154 156789 78945 61230 135',
-        version: '第2版',
-        series: 'シリーズ1',
-        publishInfo: '技術評論社',
-        sizeInfo: '100p',
-        amount: 2,
-        rentedCount: 1
-    },
-    {
-        bookId: '3-abc',
-        bookNumber: '984612472',
-        isbn:'978-4-01-094982-5',
-        issn: '0000111',
-        titleAndAuthor: '何かの技術書3 234 56 1231 1564 12154 156789 78945 61230 135',
-        version: '第2版',
-        series: 'シリーズ1',
-        publishInfo: '技術評論社',
-        sizeInfo: '100p',
-        amount: 20,
-        rentedCount: 10
-    },
-]
 
 /**
  * React.memo, useMemo, useCallbackはそれぞれメモ化する対象が違います
@@ -175,11 +134,12 @@ export const BookRegister = () => {
     const [bookList, setBookList] = useState<BookType[]>([]);
     const [pageNum, setPageNum] = useState(1);
     const [pageCount, setPageCount] =useState(1);
+    const [bookCount, setBookCount] = useState(0);
     const [selectedBook, setSelectedBook] = useState<BookType>();
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
-    const pageSize: number = 5;
+    const [pageSize, setPageSize] = useState(3);
 
     const style = {
         position: 'absolute' as 'absolute',
@@ -194,25 +154,26 @@ export const BookRegister = () => {
     };
 
 
-
-
-    const onUpdateHandler = () => {
+    /**
+     * 蔵書数変更処理
+     */
+    const onUpdateHandler = (updateAmount: number) => {
         if(!selectedBook)
             return;
-
         const url = `${BASE_URI}/register/amount`;
+        const data = new FormData();
+        data.append('bookId', selectedBook.bookId);
+        data.append('amount', updateAmount.toString());
 
-        axios.post(
-            url,
-            {
-                    bookId: selectedBook.bookId, amount: selectedBook.amount
-            }
-        )
+        axios.post(url, data)
             .then((response) => {
                 if(response.status === 200){
-                    let updating = bookList.find(x => x.bookId === selectedBook.bookId);
-                    if(updating)
-                        updating.amount = selectedBook.amount;
+                    const clone = [...bookList];
+                    let updatingIndex = bookList.findIndex(x => x.bookId === selectedBook.bookId);
+                    clone[updatingIndex].amount = updateAmount;
+                    console.log(clone[updatingIndex].amount + "件に変更しました");
+                    // setBookList([]);
+                    setBookList(clone);
                 }
             })
             .catch((reason) => {
@@ -229,14 +190,8 @@ export const BookRegister = () => {
      */
     const ModalBookCount =  () => {
         const [inputError, setInputError] = useState(false);
+        const [updateAmount, setUpdateAmount] = useState(0);
         const inputField = useRef<HTMLInputElement>(null);
-
-
-        useEffect(() => {
-            if(inputField.current)
-               inputField.current.focus();
-           // alert('focus')
-        },[inputField])
 
         return (
             <React.Fragment>
@@ -265,6 +220,7 @@ export const BookRegister = () => {
                                        error={inputError}
                                        onChange={(e) =>{
                                            setInputError(!e.target.validity.valid);
+                                           setUpdateAmount(Number(e.target.value));
                                        }}
                                        inputProps={{ inputMode: 'numeric',
                                            pattern: '^([1-9]|[1-9][0-9]|[1-9][0-9][0-9])$',
@@ -280,7 +236,7 @@ export const BookRegister = () => {
                         <div style={{ display: 'flex', marginTop: '1rem', alignItems: 'center', justifyContent: 'end'}}>
                             <Button onClick={handleClose}>Cancel</Button>
                             <Button onClick={() => {
-                                onUpdateHandler();
+                                onUpdateHandler(updateAmount);
                                 handleClose();
                             }}
                             >更新</Button>
@@ -301,26 +257,23 @@ export const BookRegister = () => {
 
         const url = `${BASE_URI}/list/search2`
 
-        console.log(`検索ページ ${props.page}`)
-
+        const data = new FormData();
+        data.append('titleAuthorIsbn', props.value);
+        data.append('page', props.page.toString());
+        data.append('size', pageSize.toString());
 
         const f = async() => {
-            await axios.get<ResponseDataType>(
-                url,
-                { params: {
-                        titleAuthorIsbn: props.value, page: props.page, size: pageSize
-                    }})
+            await axios.post<ResponseDataType>(url, data)
                 .then((response) => {
                     if(response.status === 200){
-                        console.log(`${response.data.allCount}件取得`)
-                        setBookList([]);
                         setBookList(response.data.bookViewModels);
+                        setBookCount(response.data.allCount);
                         if(props.page === 1)
                             calculatePage(response.data.allCount);
                     }
                 })
                 .catch((reason) => {
-                    console.log(reason);
+                    alert(reason.message);
                 })
                 .finally(() => {
 
@@ -362,6 +315,9 @@ export const BookRegister = () => {
                                          }}
                         />
                     </Search>
+                    {bookCount > 0 ? (
+                        <Typography marginLeft={'3rem'}>{bookCount} 件取得</Typography>
+                    ):(<></>)}
                 </Toolbar>
             </AppBar>
 

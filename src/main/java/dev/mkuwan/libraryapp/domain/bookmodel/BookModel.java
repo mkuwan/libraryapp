@@ -78,7 +78,7 @@ public class BookModel {
         RentedCount = rentedCount;
     }
 
-    public void changeAmount(int changed){
+    public BookModel changeAmount(int changed){
         if(changed < 0)
             throw new IllegalArgumentException("蔵書数を0より小さくできません");
 
@@ -87,6 +87,8 @@ public class BookModel {
         }
 
         this.Amount = changed;
+
+        return this;
     }
 
     // TODO: 貸出

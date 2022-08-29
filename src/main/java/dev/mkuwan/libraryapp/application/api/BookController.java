@@ -35,7 +35,7 @@ public class BookController {
         return new BookReturnType(allCount, viewModels);
     }
 
-    @GetMapping(path = "/list/search2")
+    @PostMapping(path = "/list/search2")
     public BookReturnType getBooksForAdmin(@RequestParam(value = "titleAuthorIsbn") String titleAuthorIsbn,
                                            @RequestParam(value = "page") int page,
                                            @RequestParam(value = "size") int size){
@@ -61,8 +61,10 @@ public class BookController {
                                                @RequestParam(value="amount") int amount){
         try {
             var book = bookService.getBook(bookId);
-            book.changeAmount(amount);
-            bookService.RegisterBook(book);
+            var updated = book.changeAmount(amount);
+
+            System.out.println("パラメータ: " + amount + ", 変更後の蔵書数: " + updated.getAmount());
+            bookService.RegisterBook(updated);
 
             return ResponseEntity.ok().body("処理しました");
         } catch (Exception e){
