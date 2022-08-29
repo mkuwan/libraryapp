@@ -172,7 +172,6 @@ export const BookRegister = () => {
                     let updatingIndex = bookList.findIndex(x => x.bookId === selectedBook.bookId);
                     clone[updatingIndex].amount = updateAmount;
                     console.log(clone[updatingIndex].amount + "件に変更しました");
-                    // setBookList([]);
                     setBookList(clone);
                 }
             })
