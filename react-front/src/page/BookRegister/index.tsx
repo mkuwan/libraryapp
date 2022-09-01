@@ -19,31 +19,20 @@ import SearchIcon from '@mui/icons-material/Search';
 import {Text} from "mdi-material-ui";
 import {API_URL, API_VERSION1, CONTROLLER_BOOK} from "../../constant/HostData";
 import axios, {AxiosResponse} from "axios";
+import BookType from "../../types/BookType";
 
 
 const BASE_URI = `${API_URL}${API_VERSION1}${CONTROLLER_BOOK}`;
 
-type BookType = {
-    bookId: string;
-    bookNumber?: string;
-    isbn?: string;
-    issn?: string;
-    titleAndAuthor: string;
-    version?: string;
-    series?: string;
-    publishInfo?: string;
-    sizeInfo?: string;
-    amount: number;
-    rentedCount: number;
-}
 
 
-type ResponseDataType = {
+
+export type ResponseDataType = {
     allCount: number,
     bookViewModels: BookType[]
 }
 
-type SearchType = {
+export type SearchType = {
     value: string,
     page: number
 }
@@ -172,7 +161,6 @@ export const BookRegister = () => {
                     let updatingIndex = bookList.findIndex(x => x.bookId === selectedBook.bookId);
                     clone[updatingIndex].amount = updateAmount;
                     console.log(clone[updatingIndex].amount + "件に変更しました");
-                    // setBookList([]);
                     setBookList(clone);
                 }
             })

@@ -250,13 +250,13 @@ export const TopBar = (props: TopBarProps ) => {
                             不思議な図書館
                         </Typography>
                     </ThemeProvider>
-                    <Search>
-                        <SearchIconWrapper>
-                            <SearchIcon />
-                        </SearchIconWrapper>
-                        <StyledInputBase placeholder={"本を検索..."}
-                                         inputProps={{'aria-label': 'search'}}/>
-                    </Search>
+                    {/*<Search>*/}
+                    {/*    <SearchIconWrapper>*/}
+                    {/*        <SearchIcon />*/}
+                    {/*    </SearchIconWrapper>*/}
+                    {/*    <StyledInputBase placeholder={"本を検索..."}*/}
+                    {/*                     inputProps={{'aria-label': 'search'}}/>*/}
+                    {/*</Search>*/}
                     <Box sx={{ flexGrow: 1 }}/>
 
                     {/*md以上で表示*/}
