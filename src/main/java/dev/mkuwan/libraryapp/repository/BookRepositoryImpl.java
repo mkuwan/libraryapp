@@ -1,6 +1,7 @@
 package dev.mkuwan.libraryapp.repository;
 
 import dev.mkuwan.libraryapp.domain.bookmodel.BookModel;
+import dev.mkuwan.libraryapp.domain.rentalmodel.RentalModel;
 import dev.mkuwan.libraryapp.domain.repository.IBookRepository;
 import dev.mkuwan.libraryapp.repository.entity.BookEntity;
 import dev.mkuwan.libraryapp.repository.entity.BookEntityDTO;
@@ -86,6 +87,7 @@ public class BookRepositoryImpl implements IBookRepository {
     public long getBooksCount() {
         return bookRepositoryJpa.count();
     }
+
 
 
 }

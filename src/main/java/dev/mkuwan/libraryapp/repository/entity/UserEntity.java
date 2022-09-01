@@ -13,6 +13,8 @@ public class UserEntity {
     @Id
     private String userId;
 
+    private String userCode;
+
     private String userName;
 
     @ManyToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)

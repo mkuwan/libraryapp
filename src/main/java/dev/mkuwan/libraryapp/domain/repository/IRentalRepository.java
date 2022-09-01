@@ -4,5 +4,7 @@ import dev.mkuwan.libraryapp.domain.rentalmodel.RentalModel;
 import org.springframework.stereotype.Component;
 
 public interface IRentalRepository {
-    RentalModel findByUserId(String UserId);
+    RentalModel getRentals(String UserId);
+
+    void save(RentalModel rentalModel);
 }
