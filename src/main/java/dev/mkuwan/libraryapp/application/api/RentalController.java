@@ -9,8 +9,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Locale;
 import java.util.Set;
 
 @RestController
@@ -31,11 +33,15 @@ public class RentalController {
 
 
         return ResponseEntity.ok()
-                .body("制限ありません。優秀会員です");
+                .body("ようこそ会員さん");
     }
 
     @PostMapping(path = "/book")
     public ResponseEntity<String> rentBook(@RequestBody RentalBody request){
+        var start = LocalDate.now();
+        var end = LocalDate.now().plusDays(7);
+        var formatter = DateTimeFormatter.ofPattern("yy年M月d日(E)", Locale.JAPANESE);
+
         try {
             // 利用者登録処理ができるまでとりあえず
             var userId = "1234567890"; // userService.getUserIdFromCode(request.userCode);
@@ -47,7 +53,7 @@ public class RentalController {
                 rental = new RentalModel(userId, new HashSet<>());
 
             // レンタル可能か確認
-            var newRental = new RentalInfoObject(request.getBookId(), LocalDate.now(), LocalDate.now().plusDays(7));
+            var newRental = new RentalInfoObject(request.getBookId(), start, end);
             rental.setRental(newRental);
 
             // 保存　RentalModelを1冊だけの状態にして保存処理をします
@@ -61,7 +67,7 @@ public class RentalController {
         }
         finally {
             return ResponseEntity.ok()
-                    .body(request.getBookId() + request.getUserCode());
+                    .body("貸出期限は" + end.format(formatter) + "です");
         }
     }
 }
