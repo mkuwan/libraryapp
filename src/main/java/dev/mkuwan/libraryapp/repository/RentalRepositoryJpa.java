@@ -10,4 +10,5 @@ import java.util.Set;
 @Repository
 public interface RentalRepositoryJpa extends JpaRepository<RentalEntity, String> {
     Set<RentalEntity> findRentalEntitiesByUserId(String userId);
+
 }

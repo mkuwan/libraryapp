@@ -1,6 +1,7 @@
 package dev.mkuwan.libraryapp.domain.repository;
 
 import dev.mkuwan.libraryapp.domain.bookmodel.BookModel;
+import dev.mkuwan.libraryapp.domain.rentalmodel.RentalModel;
 
 import java.util.ArrayList;
 import java.util.List;
