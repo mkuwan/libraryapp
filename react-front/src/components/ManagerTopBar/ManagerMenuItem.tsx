@@ -5,6 +5,7 @@ import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import FileUploadIcon from '@mui/icons-material/FileUpload';
 import BookImport from "../../page/BookImport";
 import BookRegister from "../../page/BookRegister";
+import {UserSetting} from "../../page/UserSetting";
 
 export type ManagerMenu = {
     label: string;
@@ -41,5 +42,13 @@ export const ManagerMenuItem: ManagerMenu[] = [
         icon: <FileUploadIcon/>,
         iconColor: 'lightGreen',
         content: <BookImport/>
+    },
+    {
+        label: '利用者登録',
+        fontColor: 'white',
+        path: '/admin/user',
+        icon: <FileUploadIcon/>,
+        iconColor: 'lightGreen',
+        content: <UserSetting/>
     },
 ]

@@ -31,7 +31,7 @@ const Title_Md = () => {
                         'Arial',
                         'sans-serif',],
                     fontWeight: 700, color: 'inherit'}}>
-                不思議な図書館管理者画面
+                管理者画面
             </Typography>
         </>
     )
@@ -61,7 +61,7 @@ const Title_Xs = () => {
                         'Arial',
                         'sans-serif',],
                     fontWeight: 700, color: 'inherit'}}>
-                不思議な図書館管理者画面
+                管理者画面
             </Typography>
         </>
     )
