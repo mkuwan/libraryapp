@@ -27,19 +27,19 @@ export const menuItem: MenuItem[] = [
         content: <Top/>
     },
     {
-        label: '図書一覧',
+        label: '検索・貸出',
         fontColor: 'white',
         path: '/booklist',
         icon: <LibraryBooksIcon/>,
         iconColor: 'brown',
         content: <BookList/>
     },
-    {
-        label: '貸出',
-        fontColor: 'white',
-        path: '/rental',
-        icon: <ShoppingBagIcon/>,
-        iconColor: 'white',
-        content: <RentalProcess/>
-    }
+    // {
+    //     label: '貸出',
+    //     fontColor: 'white',
+    //     path: '/rental',
+    //     icon: <ShoppingBagIcon/>,
+    //     iconColor: 'white',
+    //     content: <RentalProcess/>
+    // }
 ]
