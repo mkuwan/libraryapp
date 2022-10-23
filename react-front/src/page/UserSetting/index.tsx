@@ -11,8 +11,9 @@ import {
     Toolbar,
     Typography
 } from "@mui/material";
-import React, {useState} from "react";
+import React, {useRef, useState} from "react";
 import SearchIcon from "@mui/icons-material/Search";
+import {UserType, UserTypeInit} from "../../types/UserType";
 
 
 const Search = styled('div')(({ theme }) => ({
@@ -58,9 +59,17 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     },
 }));
 
+
 export const UserSetting = () => {
     const [searchValue, setSearchValue] = useState('');
-    const [message, setMessage] = useState('メッセージ');
+    const [account, setAccount] = useState<UserType>(UserTypeInit);
+    const inputRef = useRef(null);
+    const [requiredError, setRequiredError] = useState(false);
+
+    const resetAccount = () => {
+        setAccount(UserTypeInit);
+    }
+
     return(
         <React.Fragment>
             <Container sx={{ display: 'flex', justifyContent: 'center' }}>
@@ -68,22 +77,28 @@ export const UserSetting = () => {
                     <Grid container marginTop={'2rem'}>
                         <AppBar position={"static"} sx={{ bgcolor: '#002984'}} >
                             <Toolbar>
-                                <Search>
-                                    <SearchIconWrapper>
-                                        <SearchIcon/>
-                                    </SearchIconWrapper>
-                                    <StyledInputBase placeholder={'利用者ID検索...'}
-                                                     inputProps={{ 'aria-label': 'search'}}
-                                                     onChange={(event) => {
-                                                         setSearchValue(event.target.value);
-                                                     }}
-                                                     onKeyDown={(event) => {
-                                                         if(event.key==='Enter' && searchValue){
-                                                             // handleSearch(search)
-                                                         }
-                                                     }}/>
-                                </Search>
-                                <Typography marginLeft={'3rem'}> {message}</Typography>
+                                <Box sx={{ flexGrow: 1, display: 'flex'}}>
+                                    <Search>
+                                        <SearchIconWrapper>
+                                            <SearchIcon/>
+                                        </SearchIconWrapper>
+                                        <StyledInputBase placeholder={'利用者ID検索...'}
+                                                         inputProps={{ 'aria-label': 'search'}}
+                                                         onChange={(event) => {
+                                                             setSearchValue(event.target.value);
+                                                         }}
+                                                         onKeyDown={(event) => {
+                                                             if(event.key==='Enter' && searchValue){
+                                                                 // handleSearch(search)
+                                                             }
+                                                         }}/>
+                                    </Search>
+                                </Box>
+
+                                <Box sx={{ flexGrow: 0, display: 'flex'}}>
+                                    <Button variant={"contained"} color={"success"}>新規</Button>
+                                </Box>
+
                             </Toolbar>
                         </AppBar>
                     </Grid>
@@ -93,16 +108,21 @@ export const UserSetting = () => {
                                 <Typography marginRight={'5px'}>利用者ID :</Typography>
                             </Grid>
                             <Grid item xs={9} display={"flex"}>
-                                <Typography>0123987675</Typography>
+                                <Typography>{account.accountId}</Typography>
                             </Grid>
 
                         </Grid>
                         <Grid container spacing={1} marginTop={'1rem'} >
                             <Grid item xs={3} display={"flex"} justifyContent={"right"} marginBottom={'2rem'}>
-                                <Typography  marginRight={'5px'}>利用者名 :</Typography>
+                                <Typography marginRight={'5px'}>利用者名 :</Typography>
                             </Grid>
                             <Grid item xs={9}>
-                                <TextField fullWidth variant={'standard'} />
+                                <TextField required
+                                           error={requiredError}
+                                           inputRef={inputRef}
+                                           fullWidth
+                                           helperText={requiredError===true ? "利用者名は必須です" : ""}
+                                           variant={'standard'} />
                             </Grid>
                             <Grid item xs={3} display={"flex"} justifyContent={"right"} marginBottom={'2rem'}>
                                 <Typography marginRight={'5px'}>連絡先 :</Typography>
@@ -116,6 +136,7 @@ export const UserSetting = () => {
                             <Grid item xs={9}>
                                 <TextField fullWidth
                                            multiline
+                                           minRows={3}
                                 />
                             </Grid>
                         </Grid>
