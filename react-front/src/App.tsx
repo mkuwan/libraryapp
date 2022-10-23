@@ -1,9 +1,9 @@
-import React, {useContext} from 'react';
+import {useContext} from 'react';
 import './App.css';
 import TopBar, {MailInfoProps} from "./components/TopBar";
 import SideBar from "./components/SideBar";
 import {SidebarContext} from "./context/SidebarContext";
-import {Box, Stack, Typography, useMediaQuery} from "@mui/material";
+import {Box, Container, Stack, Typography, useMediaQuery} from "@mui/material";
 import {ThemeProvider, createTheme, Theme} from '@mui/material/styles'
 import CssBaseline from '@mui/material/CssBaseline'
 import {NavLink, Route, Routes} from "react-router-dom";
@@ -14,6 +14,8 @@ import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
 import {ManagerTopBar} from "./components/ManagerTopBar";
 import {ManagerMenuItem} from "./components/ManagerTopBar/ManagerMenuItem";
 import {ManagerUserMenuItem} from "./components/ManagerTopBar/ManagerUserMenuItem";
+import React from 'react';
+
 
 function App() {
 
@@ -31,7 +33,7 @@ function App() {
     const { isManagerView, goManagerView, isManagerLogin } = useContext(ManagerContext);
 
   return (
-      <>
+      <React.Fragment>
           {isManagerView ?
               (
                   <div>
@@ -80,7 +82,7 @@ function App() {
               </Stack>
               )}
 
-      </>
+      </React.Fragment>
   );
 }
 
